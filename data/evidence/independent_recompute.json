@@ -1,0 +1,26 @@
+{
+  "features_checked_per_transition": [
+    "cvd_short_usdt",
+    "cvd_medium_usdt",
+    "imb_medium",
+    "trades_short",
+    "cvd_session_usdt",
+    "best_bid",
+    "best_ask",
+    "update_id",
+    "depth_bid_usdt",
+    "depth_ask_usdt"
+  ],
+  "first_mismatches": [],
+  "gate_depth_band_bps": "25.0",
+  "method": "Independent audit: recompute logged features from the raw files.",
+  "mismatching_transitions": 0,
+  "provenance": {
+    "book_file": "data/raw/bybit_archive/ORDIUSDT/2026-10-01_ORDIUSDT_ob200.data.zip",
+    "book_sha256_matches_header": true,
+    "trades_file": "data/raw/bybit_archive/ORDIUSDT/ORDIUSDT2026-10-01.csv.gz",
+    "trades_sha256_matches_header": true
+  },
+  "tolerance_relative": 1e-06,
+  "transitions_checked": 6086
+}

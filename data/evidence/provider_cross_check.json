@@ -1,0 +1,150 @@
+{
+  "datasets": [
+    "bybit_ORDIUSDT_2026-10-01",
+    "tardis_ORDIUSDT_2026-10-01"
+  ],
+  "top_of_book": {
+    "compared_samples": 1439,
+    "first_mismatches": [
+      {
+        "at": "2026-10-01T01:15:00.000000Z",
+        "both_streams_quiet_within_1s": false,
+        "bybit_ORDIUSDT_2026-10-01": [
+          "4.657",
+          "4.659"
+        ],
+        "tardis_ORDIUSDT_2026-10-01": [
+          "4.656",
+          "4.659"
+        ]
+      },
+      {
+        "at": "2026-10-01T01:22:00.000000Z",
+        "both_streams_quiet_within_1s": false,
+        "bybit_ORDIUSDT_2026-10-01": [
+          "4.666",
+          "4.668"
+        ],
+        "tardis_ORDIUSDT_2026-10-01": [
+          "4.666",
+          "4.669"
+        ]
+      },
+      {
+        "at": "2026-10-01T01:51:00.000000Z",
+        "both_streams_quiet_within_1s": false,
+        "bybit_ORDIUSDT_2026-10-01": [
+          "4.635",
+          "4.637"
+        ],
+        "tardis_ORDIUSDT_2026-10-01": [
+          "4.635",
+          "4.636"
+        ]
+      },
+      {
+        "at": "2026-10-01T01:52:00.000000Z",
+        "both_streams_quiet_within_1s": false,
+        "bybit_ORDIUSDT_2026-10-01": [
+          "4.634",
+          "4.636"
+        ],
+        "tardis_ORDIUSDT_2026-10-01": [
+          "4.635",
+          "4.637"
+        ]
+      },
+      {
+        "at": "2026-10-01T02:31:00.000000Z",
+        "both_streams_quiet_within_1s": false,
+        "bybit_ORDIUSDT_2026-10-01": [
+          "4.649",
+          "4.650"
+        ],
+        "tardis_ORDIUSDT_2026-10-01": [
+          "4.647",
+          "4.649"
+        ]
+      },
+      {
+        "at": "2026-10-01T03:37:00.000000Z",
+        "both_streams_quiet_within_1s": false,
+        "bybit_ORDIUSDT_2026-10-01": [
+          "4.684",
+          "4.685"
+        ],
+        "tardis_ORDIUSDT_2026-10-01": [
+          "4.683",
+          "4.685"
+        ]
+      },
+      {
+        "at": "2026-10-01T04:03:00.000000Z",
+        "both_streams_quiet_within_1s": false,
+        "bybit_ORDIUSDT_2026-10-01": [
+          "4.713",
+          "4.715"
+        ],
+        "tardis_ORDIUSDT_2026-10-01": [
+          "4.712",
+          "4.715"
+        ]
+      },
+      {
+        "at": "2026-10-01T04:10:00.000000Z",
+        "both_streams_quiet_within_1s": false,
+        "bybit_ORDIUSDT_2026-10-01": [
+          "4.713",
+          "4.716"
+        ],
+        "tardis_ORDIUSDT_2026-10-01": [
+          "4.714",
+          "4.716"
+        ]
+      },
+      {
+        "at": "2026-10-01T04:28:00.000000Z",
+        "both_streams_quiet_within_1s": false,
+        "bybit_ORDIUSDT_2026-10-01": [
+          "4.698",
+          "4.700"
+        ],
+        "tardis_ORDIUSDT_2026-10-01": [
+          "4.699",
+          "4.7"
+        ]
+      },
+      {
+        "at": "2026-10-01T04:51:00.000000Z",
+        "both_streams_quiet_within_1s": false,
+        "bybit_ORDIUSDT_2026-10-01": [
+          "4.697",
+          "4.700"
+        ],
+        "tardis_ORDIUSDT_2026-10-01": [
+          "4.698",
+          "4.7"
+        ]
+      }
+    ],
+    "identical_best_bid_and_ask": 1383,
+    "identical_share": 0.961084,
+    "note": "Sampled state as of each boundary. Streams differ in depth and push cadence (archive ob200 = 100 ms batches), so small timing differences at a boundary can legitimately produce a mismatch.",
+    "quiet_samples_identical": 6,
+    "quiet_samples_no_update_in_either_stream_within_1s": 6,
+    "sample_interval_s": 60
+  },
+  "trades": {
+    "bybit_ORDIUSDT_2026-10-01_rows": 21347,
+    "common_ids_with_price_qty_or_side_mismatch": 0,
+    "common_trade_ids": 21347,
+    "only_in_bybit_ORDIUSDT_2026-10-01": 0,
+    "only_in_tardis_ORDIUSDT_2026-10-01": 0,
+    "tardis_ORDIUSDT_2026-10-01_rows": 21347,
+    "timestamp_abs_diff_ms": {
+      "max": 0,
+      "p50": 0,
+      "p99": 0
+    }
+  }
+}

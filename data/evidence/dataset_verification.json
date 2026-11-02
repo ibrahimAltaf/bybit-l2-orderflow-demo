@@ -1,0 +1,769 @@
+{
+  "datasets": [
+    {
+      "aggressor_side_vs_book": {
+        "consistent_with_maker_side": 325,
+        "consistent_with_taker_side": 20443,
+        "counts": {
+          "buy_at_or_above_ask": 11286,
+          "buy_at_or_below_bid": 197,
+          "buy_inside_spread": 319,
+          "sell_at_or_above_ask": 128,
+          "sell_at_or_below_bid": 9157,
+          "sell_inside_spread": 260
+        },
+        "maker_consistent_share": 0.015225,
+        "method": "Each trade's price vs. the reconstructed best bid/ask immediately before it (trades ordered before book updates with the same timestamp).",
+        "taker_consistent_share": 0.957652
+      },
+      "book": {
+        "checkpoint_comparisons": 1,
+        "checkpoint_matches": 1,
+        "continuity_failures": 0,
+        "continuity_issue_counts": {
+          "SNAPSHOT_INIT": 1,
+          "SNAPSHOT_RESET": 1
+        },
+        "cross_seq_nonincreasing_deltas": 0,
+        "deltas": 339154,
+        "deltas_applied": 339154,
+        "deltas_skipped": 0,
+        "final_best_ask": "4.558",
+        "final_best_bid": "4.556",
+        "first_delta_after_first_snapshot": {
+          "first_delta_u": 26783761,
+          "snapshot_u": 26783760
+        },
+        "first_ts": "2026-09-30T23:59:59.917000Z",
+        "first_ts_us": 1790812799917000,
+        "inter_delta_gap_ms_publish_ts": {
+          "max": 10300,
+          "p0": 78,
+          "p0.1": 98,
+          "p1": 99,
+          "p5": 99,
+          "p50": 101
+        },
+        "inter_delta_gap_ms_replay_clock": {
+          "max": 10251,
+          "p0": 0,
+          "p0.1": 3,
+          "p1": 15,
+          "p5": 45,
+          "p50": 123
+        },
+        "inter_delta_gaps_below_95ms_publish_ts": 103,
+        "inter_delta_gaps_below_95ms_replay_clock": 91252,
+        "last_ts": "2026-10-02T00:00:00.211000Z",
+        "last_ts_us": 1790899200211000,
+        "max_ask_levels": 200,
+        "max_bid_levels": 200,
+        "messages": 339156,
+        "publish_latency_ts_minus_cts_ms": {
+          "max": 399,
+          "p0": 0,
+          "p50": 24,
+          "p99": 99
+        },
+        "snapshot_checkpoints": [
+          {
+            "ask_levels": 200,
+            "bid_levels": 200,
+            "mismatched_levels": null,
+            "reconstructed_book_matches_snapshot": null,
+            "timestamp": "2026-09-30T23:59:59.917000Z",
+            "u_minus_last_applied_u": null,
+            "update_id": 26783760
+          },
+          {
+            "ask_levels": 200,
+            "bid_levels": 200,
+            "mismatched_levels": 0,
+            "reconstructed_book_matches_snapshot": true,
+            "timestamp": "2026-10-02T00:00:00.211000Z",
+            "u_minus_last_applied_u": 0,
+            "update_id": 27122914
+          }
+        ],
+        "snapshots": 2,
+        "system_ts_regressions": 0,
+        "update_id_diff_distribution": {
+          "1": 339154
+        },
+        "update_id_not_plus_one_deltas": 0,
+        "update_id_plus_one_deltas": 339154
+      },
+      "book_raw_fields": [
+        "cts",
+        "data",
+        "data.a",
+        "data.b",
+        "data.s",
+        "data.seq",
+        "data.u",
+        "topic",
+        "ts",
+        "type"
+      ],
+      "book_schema_validation": {
+        "error_examples": [],
+        "records_malformed": 0,
+        "records_ok": 339156,
+        "source": "2026-10-01_ORDIUSDT_ob200.data.zip"
+      },
+      "dataset_id": "bybit_ORDIUSDT_2026-10-01",
+      "date": "2026-10-01",
+      "depth": 200,
+      "files": [
+        {
+          "bytes": 13241285,
+          "content_type": "application/octet-stream",
+          "dataset_id": "bybit_ORDIUSDT_2026-10-01",
+          "http_status": 200,
+          "kind": "book",
+          "last_modified": "Fri, 02 Oct 2026 00:09:07 GMT",
+          "local_path": "data/raw/bybit_archive/ORDIUSDT/2026-10-01_ORDIUSDT_ob200.data.zip",
+          "retrieved_at_utc": "2026-11-01T22:08:40.756460+00:00",
+          "sha256": "d7adcf49d110f93fbcc756fcbcce4c3a498e0896bf7a8c2becad7c03acb18558",
+          "url": "https://quote-saver.bycsi.com/orderbook/linear/ORDIUSDT/2026-10-01_ORDIUSDT_ob200.data.zip"
+        },
+        {
+          "bytes": 923498,
+          "content_type": "text/csv",
+          "dataset_id": "bybit_ORDIUSDT_2026-10-01",
+          "http_status": 200,
+          "kind": "trades",
+          "last_modified": "Fri, 02 Oct 2026 01:14:17 GMT",
+          "local_path": "data/raw/bybit_archive/ORDIUSDT/ORDIUSDT2026-10-01.csv.gz",
+          "retrieved_at_utc": "2026-11-01T22:08:06.999062+00:00",
+          "sha256": "a59e3cd00ff8950fe492685dd33bd200bbdbdb668bd173cadf13c64069deec70",
+          "url": "https://public.bybit.com/trading/ORDIUSDT/ORDIUSDT2026-10-01.csv.gz"
+        }
+      ],
+      "note": "Smaller-cap, actively traded USDT perpetual; full UTC day; replayed by the demo.",
+      "provider": "bybit_archive",
+      "symbol": "ORDIUSDT",
+      "trades": {
+        "aggressor_side": "REPORTED by provider; interpreted as taker side (see aggressor_side_vs_book)",
+        "buy_notional_usdt": "877111.45547",
+        "buy_trades": 11802,
+        "columns": [
+          "timestamp",
+          "symbol",
+          "side",
+          "size",
+          "price",
+          "tickDirection",
+          "trdMatchID",
+          "grossValue",
+          "homeNotional",
+          "foreignNotional",
+          "RPI"
+        ],
+        "duplicate_trade_ids": 0,
+        "file_was_chronological": true,
+        "first_ts": "2026-10-01T00:00:02.071000Z",
+        "first_ts_us": 1790812802071000,
+        "last_ts": "2026-10-01T23:59:25.761700Z",
+        "last_ts_us": 1790899165761700,
+        "out_of_order_rows": 0,
+        "rows": 21347,
+        "rpi_trades": 544,
+        "sell_notional_usdt": "790700.90051",
+        "sell_trades": 9545
+      },
+      "trades_schema_validation": {
+        "error_examples": [],
+        "records_malformed": 0,
+        "records_ok": 21347,
+        "source": "ORDIUSDT2026-10-01.csv.gz"
+      },
+      "utc_day_bounds": [
+        "2026-10-01T00:00:00.000000Z",
+        "2026-10-02T00:00:00.000000Z"
+      ],
+      "verdict": {
+        "checks": {
+          "at_least_one_checkpoint_comparison": true,
+          "book_never_exceeds_advertised_depth": true,
+          "book_parsed_without_schema_errors": true,
+          "book_timestamps_inside_utc_day_plus_minus_60s": true,
+          "has_incremental_deltas": true,
+          "has_snapshot": true,
+          "no_continuity_failures": true,
+          "no_crossed_book": true,
+          "reconstruction_matches_all_checkpoint_snapshots": true,
+          "reported_side_consistent_with_taker_semantics": true,
+          "trade_timestamps_inside_utc_day": true,
+          "trades_parsed_without_schema_errors": true,
+          "trades_present": true,
+          "update_id_always_plus_one": true
+        },
+        "pass": true
+      }
+    },
+    {
+      "aggressor_side_vs_book": {
+        "consistent_with_maker_side": 1480,
+        "consistent_with_taker_side": 44073,
+        "counts": {
+          "buy_at_or_above_ask": 20196,
+          "buy_at_or_below_bid": 1123,
+          "buy_inside_spread": 1424,
+          "sell_at_or_above_ask": 357,
+          "sell_at_or_below_bid": 23877,
+          "sell_inside_spread": 1207
+        },
+        "maker_consistent_share": 0.030716,
+        "method": "Each trade's price vs. the reconstructed best bid/ask immediately before it (trades ordered before book updates with the same timestamp).",
+        "taker_consistent_share": 0.914681
+      },
+      "book": {
+        "checkpoint_comparisons": 1,
+        "checkpoint_matches": 1,
+        "continuity_failures": 0,
+        "continuity_issue_counts": {
+          "SNAPSHOT_INIT": 1,
+          "SNAPSHOT_RESET": 1
+        },
+        "cross_seq_nonincreasing_deltas": 0,
+        "deltas": 553441,
+        "deltas_applied": 553441,
+        "deltas_skipped": 0,
+        "final_best_ask": "0.0002341",
+        "final_best_bid": "0.0002339",
+        "first_delta_after_first_snapshot": {
+          "first_delta_u": 4423757,
+          "snapshot_u": 4423756
+        },
+        "first_ts": "2025-10-01T00:00:00.057000Z",
+        "first_ts_us": 1759276800057000,
+        "inter_delta_gap_ms_publish_ts": {
+          "max": 6801,
+          "p0": 60,
+          "p0.1": 97,
+          "p1": 98,
+          "p5": 99,
+          "p50": 100
+        },
+        "inter_delta_gap_ms_replay_clock": {
+          "max": 6748,
+          "p0": 0,
+          "p0.1": 3,
+          "p1": 16,
+          "p5": 52,
+          "p50": 106
+        },
+        "inter_delta_gaps_below_95ms_publish_ts": 237,
+        "inter_delta_gaps_below_95ms_replay_clock": 164577,
+        "last_ts": "2025-10-02T00:00:00.207000Z",
+        "last_ts_us": 1759363200207000,
+        "max_ask_levels": 200,
+        "max_bid_levels": 200,
+        "messages": 553443,
+        "publish_latency_ts_minus_cts_ms": {
+          "max": 378,
+          "p0": 1,
+          "p50": 19,
+          "p99": 98
+        },
+        "snapshot_checkpoints": [
+          {
+            "ask_levels": 200,
+            "bid_levels": 200,
+            "mismatched_levels": null,
+            "reconstructed_book_matches_snapshot": null,
+            "timestamp": "2025-10-01T00:00:00.057000Z",
+            "u_minus_last_applied_u": null,
+            "update_id": 4423756
+          },
+          {
+            "ask_levels": 200,
+            "bid_levels": 200,
+            "mismatched_levels": 0,
+            "reconstructed_book_matches_snapshot": true,
+            "timestamp": "2025-10-02T00:00:00.207000Z",
+            "u_minus_last_applied_u": 0,
+            "update_id": 4977197
+          }
+        ],
+        "snapshots": 2,
+        "system_ts_regressions": 0,
+        "update_id_diff_distribution": {
+          "1": 553441
+        },
+        "update_id_not_plus_one_deltas": 0,
+        "update_id_plus_one_deltas": 553441
+      },
+      "book_raw_fields": [
+        "cts",
+        "data",
+        "data.a",
+        "data.b",
+        "data.s",
+        "data.seq",
+        "data.u",
+        "topic",
+        "ts",
+        "type"
+      ],
+      "book_schema_validation": {
+        "error_examples": [],
+        "records_malformed": 0,
+        "records_ok": 553443,
+        "source": "2025-10-01_10000LADYSUSDT_ob200.data.zip"
+      },
+      "dataset_id": "bybit_10000LADYSUSDT_2025-10-01",
+      "date": "2025-10-01",
+      "depth": 200,
+      "files": [
+        {
+          "bytes": 15292185,
+          "content_type": "application/octet-stream",
+          "dataset_id": "bybit_10000LADYSUSDT_2025-10-01",
+          "http_status": 200,
+          "kind": "book",
+          "last_modified": "Thu, 02 Oct 2025 00:08:35 GMT",
+          "local_path": "data/raw/bybit_archive/10000LADYSUSDT/2025-10-01_10000LADYSUSDT_ob200.data.zip",
+          "retrieved_at_utc": "2026-11-01T22:08:56.544094+00:00",
+          "sha256": "35efe269e3800329c68ef97a4fa60474fa94e65350129e058be64a17a4164394",
+          "url": "https://quote-saver.bycsi.com/orderbook/linear/10000LADYSUSDT/2025-10-01_10000LADYSUSDT_ob200.data.zip"
+        },
+        {
+          "bytes": 1892178,
+          "content_type": "text/csv",
+          "dataset_id": "bybit_10000LADYSUSDT_2025-10-01",
+          "http_status": 200,
+          "kind": "trades",
+          "last_modified": "Thu, 02 Oct 2025 01:11:24 GMT",
+          "local_path": "data/raw/bybit_archive/10000LADYSUSDT/10000LADYSUSDT2025-10-01.csv.gz",
+          "retrieved_at_utc": "2026-11-01T22:08:46.042205+00:00",
+          "sha256": "abed33fe15fe250d11c9ddb875bbd8e987a04e2d1b57be273c710e1155d3fb56",
+          "url": "https://public.bybit.com/trading/10000LADYSUSDT/10000LADYSUSDT2025-10-01.csv.gz"
+        }
+      ],
+      "note": "DELISTED contract (instruments-info status=Closed, delivery 2025-10-06). Coverage check.",
+      "provider": "bybit_archive",
+      "symbol": "10000LADYSUSDT",
+      "trades": {
+        "aggressor_side": "REPORTED by provider; interpreted as taker side (see aggressor_side_vs_book)",
+        "buy_notional_usdt": "718665.0761800",
+        "buy_trades": 22743,
+        "columns": [
+          "timestamp",
+          "symbol",
+          "side",
+          "size",
+          "price",
+          "tickDirection",
+          "trdMatchID",
+          "grossValue",
+          "homeNotional",
+          "foreignNotional",
+          "RPI"
+        ],
+        "duplicate_trade_ids": 0,
+        "file_was_chronological": true,
+        "first_ts": "2025-10-01T00:01:00.417800Z",
+        "first_ts_us": 1759276860417800,
+        "last_ts": "2025-10-01T23:58:59.616600Z",
+        "last_ts_us": 1759363139616600,
+        "out_of_order_rows": 0,
+        "rows": 48184,
+        "rpi_trades": 0,
+        "sell_notional_usdt": "856568.5794300",
+        "sell_trades": 25441
+      },
+      "trades_schema_validation": {
+        "error_examples": [],
+        "records_malformed": 0,
+        "records_ok": 48184,
+        "source": "10000LADYSUSDT2025-10-01.csv.gz"
+      },
+      "utc_day_bounds": [
+        "2025-10-01T00:00:00.000000Z",
+        "2025-10-02T00:00:00.000000Z"
+      ],
+      "verdict": {
+        "checks": {
+          "at_least_one_checkpoint_comparison": true,
+          "book_never_exceeds_advertised_depth": true,
+          "book_parsed_without_schema_errors": true,
+          "book_timestamps_inside_utc_day_plus_minus_60s": true,
+          "has_incremental_deltas": true,
+          "has_snapshot": true,
+          "no_continuity_failures": true,
+          "no_crossed_book": true,
+          "reconstruction_matches_all_checkpoint_snapshots": true,
+          "reported_side_consistent_with_taker_semantics": true,
+          "trade_timestamps_inside_utc_day": true,
+          "trades_parsed_without_schema_errors": true,
+          "trades_present": true,
+          "update_id_always_plus_one": true
+        },
+        "pass": true
+      }
+    },
+    {
+      "aggressor_side_vs_book": {
+        "consistent_with_maker_side": 302,
+        "consistent_with_taker_side": 21181,
+        "counts": {
+          "buy_at_or_above_ask": 10769,
+          "buy_at_or_below_bid": 135,
+          "buy_inside_spread": 488,
+          "sell_at_or_above_ask": 167,
+          "sell_at_or_below_bid": 10412,
+          "sell_inside_spread": 634
+        },
+        "maker_consistent_share": 0.01336,
+        "method": "Each trade's price vs. the reconstructed best bid/ask immediately before it (trades ordered before book updates with the same timestamp).",
+        "taker_consistent_share": 0.937005
+      },
+      "book": {
+        "checkpoint_comparisons": 1,
+        "checkpoint_matches": 1,
+        "continuity_failures": 0,
+        "continuity_issue_counts": {
+          "SNAPSHOT_INIT": 1,
+          "SNAPSHOT_RESET": 1
+        },
+        "cross_seq_nonincreasing_deltas": 0,
+        "deltas": 372857,
+        "deltas_applied": 372857,
+        "deltas_skipped": 0,
+        "final_best_ask": "0.0004549",
+        "final_best_bid": "0.0004546",
+        "first_delta_after_first_snapshot": {
+          "first_delta_u": 21028147,
+          "snapshot_u": 21028146
+        },
+        "first_ts": "2025-06-01T00:00:00.883000Z",
+        "first_ts_us": 1748736000883000,
+        "inter_delta_gap_ms_publish_ts": {
+          "max": 8701,
+          "p0": 26,
+          "p0.1": 82,
+          "p1": 95,
+          "p5": 98,
+          "p50": 101
+        },
+        "inter_delta_gap_ms_replay_clock": {
+          "max": 8776,
+          "p0": 0,
+          "p0.1": 6,
+          "p1": 15,
+          "p5": 39,
+          "p50": 106
+        },
+        "inter_delta_gaps_below_95ms_publish_ts": 2014,
+        "inter_delta_gaps_below_95ms_replay_clock": 94578,
+        "last_ts": "2025-06-02T00:00:00.561000Z",
+        "last_ts_us": 1748822400561000,
+        "max_ask_levels": 500,
+        "max_bid_levels": 500,
+        "messages": 372859,
+        "publish_latency_ts_minus_cts_ms": {
+          "max": 341,
+          "p0": 1,
+          "p50": 41,
+          "p99": 99
+        },
+        "snapshot_checkpoints": [
+          {
+            "ask_levels": 500,
+            "bid_levels": 500,
+            "mismatched_levels": null,
+            "reconstructed_book_matches_snapshot": null,
+            "timestamp": "2025-06-01T00:00:00.883000Z",
+            "u_minus_last_applied_u": null,
+            "update_id": 21028146
+          },
+          {
+            "ask_levels": 500,
+            "bid_levels": 500,
+            "mismatched_levels": 0,
+            "reconstructed_book_matches_snapshot": true,
+            "timestamp": "2025-06-02T00:00:00.561000Z",
+            "u_minus_last_applied_u": 0,
+            "update_id": 21401003
+          }
+        ],
+        "snapshots": 2,
+        "system_ts_regressions": 0,
+        "update_id_diff_distribution": {
+          "1": 372857
+        },
+        "update_id_not_plus_one_deltas": 0,
+        "update_id_plus_one_deltas": 372857
+      },
+      "book_raw_fields": [
+        "cts",
+        "data",
+        "data.a",
+        "data.b",
+        "data.s",
+        "data.seq",
+        "data.u",
+        "topic",
+        "ts",
+        "type"
+      ],
+      "book_schema_validation": {
+        "error_examples": [],
+        "records_malformed": 0,
+        "records_ok": 372859,
+        "source": "2025-06-01_10000LADYSUSDT_ob500.data.zip"
+      },
+      "dataset_id": "bybit_10000LADYSUSDT_2025-06-01",
+      "date": "2025-06-01",
+      "depth": 500,
+      "files": [
+        {
+          "bytes": 10440797,
+          "content_type": "application/octet-stream",
+          "dataset_id": "bybit_10000LADYSUSDT_2025-06-01",
+          "http_status": 200,
+          "kind": "book",
+          "last_modified": "Mon, 02 Jun 2025 00:05:39 GMT",
+          "local_path": "data/raw/bybit_archive/10000LADYSUSDT/2025-06-01_10000LADYSUSDT_ob500.data.zip",
+          "retrieved_at_utc": "2026-11-01T22:09:24.635322+00:00",
+          "sha256": "8e65c11dd72d9c9f8689e5504b92c24606e30d01594098d774da4e41fdabd0c4",
+          "url": "https://quote-saver.bycsi.com/orderbook/linear/10000LADYSUSDT/2025-06-01_10000LADYSUSDT_ob500.data.zip"
+        },
+        {
+          "bytes": 891157,
+          "content_type": "text/csv",
+          "dataset_id": "bybit_10000LADYSUSDT_2025-06-01",
+          "http_status": 200,
+          "kind": "trades",
+          "last_modified": "Mon, 02 Jun 2025 01:06:41 GMT",
+          "local_path": "data/raw/bybit_archive/10000LADYSUSDT/10000LADYSUSDT2025-06-01.csv.gz",
+          "retrieved_at_utc": "2026-11-01T22:08:58.482062+00:00",
+          "sha256": "513a14b9385ac3e66b3ae208427e8b0901b5fa12c5872a684fba7eb13c5b855f",
+          "url": "https://public.bybit.com/trading/10000LADYSUSDT/10000LADYSUSDT2025-06-01.csv.gz"
+        }
+      ],
+      "note": "Older ob500 archive format (before the ~2025-08-21 switch to ob200).",
+      "provider": "bybit_archive",
+      "symbol": "10000LADYSUSDT",
+      "trades": {
+        "aggressor_side": "REPORTED by provider; interpreted as taker side (see aggressor_side_vs_book)",
+        "buy_notional_usdt": "248372.1470100",
+        "buy_trades": 11392,
+        "columns": [
+          "timestamp",
+          "symbol",
+          "side",
+          "size",
+          "price",
+          "tickDirection",
+          "trdMatchID",
+          "grossValue",
+          "homeNotional",
+          "foreignNotional",
+          "RPI"
+        ],
+        "duplicate_trade_ids": 0,
+        "file_was_chronological": true,
+        "first_ts": "2025-06-01T00:00:05.497900Z",
+        "first_ts_us": 1748736005497900,
+        "last_ts": "2025-06-01T23:59:48.253400Z",
+        "last_ts_us": 1748822388253400,
+        "out_of_order_rows": 0,
+        "rows": 22605,
+        "rpi_trades": 0,
+        "sell_notional_usdt": "295094.1952300",
+        "sell_trades": 11213
+      },
+      "trades_schema_validation": {
+        "error_examples": [],
+        "records_malformed": 0,
+        "records_ok": 22605,
+        "source": "10000LADYSUSDT2025-06-01.csv.gz"
+      },
+      "utc_day_bounds": [
+        "2025-06-01T00:00:00.000000Z",
+        "2025-06-02T00:00:00.000000Z"
+      ],
+      "verdict": {
+        "checks": {
+          "at_least_one_checkpoint_comparison": true,
+          "book_never_exceeds_advertised_depth": true,
+          "book_parsed_without_schema_errors": true,
+          "book_timestamps_inside_utc_day_plus_minus_60s": true,
+          "has_incremental_deltas": true,
+          "has_snapshot": true,
+          "no_continuity_failures": true,
+          "no_crossed_book": true,
+          "reconstruction_matches_all_checkpoint_snapshots": true,
+          "reported_side_consistent_with_taker_semantics": true,
+          "trade_timestamps_inside_utc_day": true,
+          "trades_parsed_without_schema_errors": true,
+          "trades_present": true,
+          "update_id_always_plus_one": true
+        },
+        "pass": true
+      }
+    },
+    {
+      "aggressor_side_vs_book": {
+        "consistent_with_maker_side": 148,
+        "consistent_with_taker_side": 20998,
+        "counts": {
+          "buy_at_or_above_ask": 11591,
+          "buy_at_or_below_bid": 88,
+          "buy_inside_spread": 123,
+          "sell_at_or_above_ask": 60,
+          "sell_at_or_below_bid": 9407,
+          "sell_inside_spread": 78
+        },
+        "maker_consistent_share": 0.006933,
+        "method": "Each trade's price vs. the reconstructed best bid/ask immediately before it (trades ordered before book updates with the same timestamp).",
+        "taker_consistent_share": 0.983651
+      },
+      "book": {
+        "checkpoint_comparisons": 1,
+        "checkpoint_matches": 1,
+        "continuity_failures": 0,
+        "continuity_issue_counts": {
+          "SNAPSHOT_INIT": 1,
+          "SNAPSHOT_RESET": 1
+        },
+        "deltas": 651957,
+        "deltas_applied": 651957,
+        "deltas_skipped": 0,
+        "final_best_ask": "4.558",
+        "final_best_bid": "4.556",
+        "first_ts": "2026-09-30T23:59:59.815000Z",
+        "first_ts_us": 1790812799815000,
+        "inter_delta_gap_ms_replay_clock": {
+          "max": 16800,
+          "p0": 2,
+          "p0.1": 19,
+          "p1": 19,
+          "p5": 19,
+          "p50": 21
+        },
+        "inter_delta_gaps_below_95ms_replay_clock": 467002,
+        "last_ts": "2026-10-01T23:59:58.775000Z",
+        "last_ts_us": 1790899198775000,
+        "max_ask_levels": 50,
+        "max_bid_levels": 50,
+        "messages": 651959,
+        "snapshot_checkpoints": [
+          {
+            "ask_levels": 50,
+            "bid_levels": 50,
+            "mismatched_levels": null,
+            "reconstructed_book_matches_snapshot": null,
+            "timestamp": "2026-09-30T23:59:59.815000Z",
+            "u_minus_last_applied_u": null,
+            "update_id": null
+          },
+          {
+            "ask_levels": 50,
+            "bid_levels": 50,
+            "mismatched_levels": 0,
+            "reconstructed_book_matches_snapshot": true,
+            "timestamp": "2026-10-01T09:27:02.315000Z",
+            "u_minus_last_applied_u": null,
+            "update_id": null
+          }
+        ],
+        "snapshots": 2,
+        "update_id_diff_distribution": "NOT AVAILABLE: source publishes no update IDs"
+      },
+      "book_schema_validation": {
+        "error_examples": [],
+        "records_malformed": 0,
+        "records_ok": 1818628,
+        "source": "2026-10-01_ORDIUSDT_incremental_book_L2.csv.gz"
+      },
+      "dataset_id": "tardis_ORDIUSDT_2026-10-01",
+      "date": "2026-10-01",
+      "depth": null,
+      "files": [
+        {
+          "bytes": 15236420,
+          "content_type": "text/csv",
+          "dataset_id": "tardis_ORDIUSDT_2026-10-01",
+          "http_status": 200,
+          "kind": "book",
+          "last_modified": null,
+          "local_path": "data/raw/tardis_free/ORDIUSDT/2026-10-01_ORDIUSDT_incremental_book_L2.csv.gz",
+          "retrieved_at_utc": "2026-11-01T22:09:39.187124+00:00",
+          "sha256": "57ddc0a59f0c80c147b2ceb434f06f33963d6e01b2db8e7e593a1f5acea72f5d",
+          "url": "https://datasets.tardis.dev/v1/bybit/incremental_book_L2/2026/10/01/ORDIUSDT.csv.gz"
+        },
+        {
+          "bytes": 679623,
+          "content_type": "text/csv",
+          "dataset_id": "tardis_ORDIUSDT_2026-10-01",
+          "http_status": 200,
+          "kind": "trades",
+          "last_modified": null,
+          "local_path": "data/raw/tardis_free/ORDIUSDT/2026-10-01_ORDIUSDT_trades.csv.gz",
+          "retrieved_at_utc": "2026-11-01T22:09:26.099621+00:00",
+          "sha256": "80ba6285673a8a70bd365dbfbea9d68b8c3713a258be35e38b8c6c493baa0908",
+          "url": "https://datasets.tardis.dev/v1/bybit/trades/2026/10/01/ORDIUSDT.csv.gz"
+        }
+      ],
+      "note": "Independent third-party capture of the same symbol/day (free first-of-month sample).",
+      "provider": "tardis_free",
+      "symbol": "ORDIUSDT",
+      "trades": {
+        "aggressor_side": "REPORTED by provider; interpreted as taker side (see aggressor_side_vs_book)",
+        "buy_notional_usdt": "877111.45547",
+        "buy_trades": 11802,
+        "columns": [
+          "exchange",
+          "symbol",
+          "timestamp",
+          "local_timestamp",
+          "id",
+          "side",
+          "price",
+          "amount"
+        ],
+        "duplicate_trade_ids": 0,
+        "file_was_chronological": true,
+        "first_ts": "2026-10-01T00:00:02.071000Z",
+        "first_ts_us": 1790812802071000,
+        "last_ts": "2026-10-01T23:59:25.761000Z",
+        "last_ts_us": 1790899165761000,
+        "out_of_order_rows": 0,
+        "rows": 21347,
+        "rpi_trades": 0,
+        "sell_notional_usdt": "790700.90051",
+        "sell_trades": 9545
+      },
+      "trades_schema_validation": {
+        "error_examples": [],
+        "records_malformed": 0,
+        "records_ok": 21347,
+        "source": "2026-10-01_ORDIUSDT_trades.csv.gz"
+      },
+      "utc_day_bounds": [
+        "2026-10-01T00:00:00.000000Z",
+        "2026-10-02T00:00:00.000000Z"
+      ],
+      "verdict": {
+        "checks": {
+          "book_parsed_without_schema_errors": true,
+          "book_timestamps_inside_utc_day_plus_minus_60s": true,
+          "has_incremental_deltas": true,
+          "has_snapshot": true,
+          "no_continuity_failures": true,
+          "no_crossed_book": true,
+          "reconstruction_matches_all_checkpoint_snapshots": true,
+          "reported_side_consistent_with_taker_semantics": true,
+          "trade_timestamps_inside_utc_day": true,
+          "trades_parsed_without_schema_errors": true,
+          "trades_present": true
+        },
+        "pass": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+# =============================================================================
+# Bybit L2 feasibility demo -- configuration
+#
+# THRESHOLD POLICY
+#   Every detector threshold below was fixed BEFORE the detector was first run
+#   on the real ORDIUSDT sample and has NOT been changed after looking at the
+#   results (author's statement; no pre-delivery version history exists to
+#   prove it). They are round, a-priori engineering values chosen to make the
+#   state machine's logic legible -- NOT optimised, NOT fitted to any known
+#   historical move, and NOT evidence of an edge. Any later change must be
+#   recorded in docs/TECHNICAL_DEMO_REPORT.md ("Threshold change log").
+#
+# Sign convention: every flow / imbalance feature is in [-1, +1] with + = buy
+# side. SHORT rules use the same thresholds applied to the sign-flipped
+# features (symmetric hypothesis).
+# =============================================================================
+
+paths:
+  raw_dir: data/raw
+  evidence_dir: data/evidence
+  synthetic_output_dir: data/synthetic_demo_output
+
+# -----------------------------------------------------------------------------
+# Datasets. URLs are built by src/bybit_demo/data/provider_registry.py.
+# -----------------------------------------------------------------------------
+datasets:
+  - id: bybit_ORDIUSDT_2026-10-01
+    provider: bybit_archive
+    symbol: ORDIUSDT
+    date: 2026-10-01
+    depth: 200
+    role: primary
+    note: "Smaller-cap, actively traded USDT perpetual; full UTC day; replayed by the demo."
+
+  - id: bybit_10000LADYSUSDT_2025-10-01
+    provider: bybit_archive
+    symbol: 10000LADYSUSDT
+    date: 2025-10-01
+    depth: 200
+    role: verify
+    note: "DELISTED contract (instruments-info status=Closed, delivery 2025-10-06). Coverage check."
+
+  - id: bybit_10000LADYSUSDT_2025-06-01
+    provider: bybit_archive
+    symbol: 10000LADYSUSDT
+    date: 2025-06-01
+    depth: 500
+    role: verify
+    note: "Older ob500 archive format (before the ~2025-08-21 switch to ob200)."
+
+  - id: tardis_ORDIUSDT_2026-10-01
+    provider: tardis_free
+    symbol: ORDIUSDT
+    date: 2026-10-01
+    role: cross_check
+    note: "Independent third-party capture of the same symbol/day (free first-of-month sample)."
+
+replay:
+  book_clock: cts     # matching-engine time; same clock as trade fill time T
+  speed: 0.0          # 0 = fast deterministic mode
+  max_events: null
+  start_utc: null
+  end_utc: null
+
+book:
+  # Bybit docs do not promise u increments by exactly 1. It did on every
+  # verified archive file, so strict contiguity is enforced and any jump is
+  # treated as a SEQUENCE_GAP (book invalidated until the next snapshot).
+  require_contiguous_update_id: true
+
+features:
+  depth_bands_bps: [10.0, 25.0, 50.0]   # resting depth measured within these distances of mid
+  book_pressure_weights: [0.5, 0.3, 0.2] # weighted band imbalances -> one book-pressure score
+  near_band_bps: 10.0                    # "near-touch" band used for book imbalance
+  flow_windows_s: [5.0, 30.0, 120.0]     # short / medium / long trade-flow windows
+  event_window_trades: 50                # event-count CVD window
+  liquidity_band_bps: 25.0               # add/cancel/withdrawal accounting band
+  liquidity_window_s: 10.0               # add/cancel/withdrawal rolling window
+  replenish_memory_s: 5.0                # liquidity re-added at a just-consumed price within this time = replenishment
+  vol_short_s: 30.0                      # short realized-vol window
+  vol_long_s: 300.0                      # long realized-vol window (normalizer)
+  extension_window_s: 120.0              # extension measured from the rolling min/max over this window
+  min_sigma_bps: 3.0                     # floor for the vol normalizer (avoid divide-by-tiny in dead markets)
+  absorption_window_s: 30.0
+  absorption_min_volume_vs_typical: 1.5  # aggressive volume >= 1.5x the long-window typical rate = "large"
+  absorption_max_displacement_bps: 3.0   # ...while price moved against the absorber by <= 3 bps
+
+detector:
+  gates:
+    max_spread_bps: 8.0             # SPREAD_TOO_WIDE above this (~3-4 ticks on ORDI); execution-quality gate
+    tight_spread_bps: 3.0           # spread regime label: TIGHT <= 3 bps < NORMAL <= 8 bps < WIDE
+    depth_band_bps: 25.0            # depth adequacy measured within 25 bps of mid
+    reference_order_notional_usdt: 1000.0  # illustrative order size (NOT a client sizing rule)
+    min_depth_multiple: 2.0         # each side must hold >= 2x the reference order -> $2,000 within 25 bps
+    max_book_age_ms: 5000           # STALE_BOOK if no book update for 5 s (ob200 pushes only on change)
+    warmup_s: 300.0                 # INSUFFICIENT_HISTORY until the long vol window (300 s) is populated
+
+  watch:
+    max_compression_ratio: 1.2      # short/long realized-vol rate ratio; <=1.2 = not already expanding
+    min_flow_imbalance: 0.20        # medium-window (30 s) directional notional imbalance
+    min_flow_acceleration: 0.05     # short-window imbalance exceeds long-window baseline by >= 0.05
+    max_support_withdrawal: 0.25    # support side net withdrawal ratio must stay <= 0.25 of resting depth
+    min_book_imbalance: 0.0         # near-touch book imbalance not against the direction...
+    min_resistance_withdrawal: 0.0  # ...or resistance side net withdrawing (either satisfies "resistance weakening")
+    max_extension_sigma: 2.0        # move from 120 s extreme <= 2 sigma, else ALREADY_EXTENDED
+    lapse_grace_ms: 2000            # WATCH -> IDLE if core flow conditions fail for > 2 s
+
+  candidate:
+    min_watch_duration_ms: 3000     # persistence: at least 3 s in WATCH...
+    min_trades_in_watch: 10         # ...and at least 10 trades while in WATCH
+    min_flow_imbalance: 0.30        # stronger medium-window imbalance than WATCH
+    min_event_flow_imbalance: 0.20  # last-50-trades imbalance agrees
+    min_book_pressure: 0.10         # weighted multi-band book pressure in direction...
+    min_resistance_withdrawal: 0.10 # ...or resistance net-withdrawing >= 10% of its resting depth
+    min_support_replenishment: 0.30 # >= 30% of liquidity consumed on support side reappeared
+    max_duration_ms: 30000          # CANDIDATE_TIMEOUT if not confirmed within 30 s
+
+  confirm:
+    min_flow_imbalance_short: 0.30  # continuation in the 5 s window
+    min_resistance_depletion: 0.25  # resistance-side (executed + cancelled - added) >= 25% of its resting depth
+    min_microprice_rel: 0.0         # microprice on the direction's side of mid
+    min_book_pressure: 0.0          # book pressure not against the direction
+    max_extension_sigma: 2.5        # early-entry cap at confirmation (slightly looser than WATCH)
+
+  invalidation:
+    flow_reversal_imbalance: 0.30   # FLOW_REVERSAL if 5 s imbalance <= -0.30 against the direction
+    book_pressure_reversal: 0.40    # BOOK_PRESSURE_REVERSAL if book pressure <= -0.40 against
+    cvd_divergence_bps: 5.0         # CVD_DIVERGENCE: 30 s flow in direction but price moved >= 5 bps against
+    isolated_spike_share: 0.60      # ISOLATED_SPIKE: one print >= 60% of short-window notional...
+    min_trades_short_window: 3      # ...or fewer than 3 trades in the short window
+
+  cooldown:
+    after_confirm_ms: 60000
+    after_reject_ms: 10000

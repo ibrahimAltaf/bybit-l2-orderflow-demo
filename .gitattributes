@@ -1,0 +1,4 @@
+# Identical bytes on every platform: LF text, archives untouched.
+* text=auto eol=lf
+*.zip binary
+*.gz binary

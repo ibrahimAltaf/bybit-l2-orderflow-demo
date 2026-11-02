@@ -1,0 +1,102 @@
+{
+  "book_schema_validation": {
+    "error_examples": [],
+    "records_malformed": 0,
+    "records_ok": 339156,
+    "source": "2026-10-01_ORDIUSDT_ob200.data.zip"
+  },
+  "header": {
+    "book_clock": "cts",
+    "book_file": "data/raw/bybit_archive/ORDIUSDT/2026-10-01_ORDIUSDT_ob200.data.zip",
+    "book_file_sha256": "d7adcf49d110f93fbcc756fcbcce4c3a498e0896bf7a8c2becad7c03acb18558",
+    "code_version": "0.1.0",
+    "config_sha256": "38a83e45b281fa680dace6be66b01640f56899d4448843b2a088bcec465f74a0",
+    "data_kind": "REAL historical market data (not synthetic)",
+    "dataset_id": "bybit_ORDIUSDT_2026-10-01",
+    "date": "2026-10-01",
+    "disclaimer": "Signal research demonstration only. No profitability claim.",
+    "evaluation_window_utc": [
+      null,
+      null
+    ],
+    "max_events": null,
+    "provider": "bybit_archive",
+    "symbol": "ORDIUSDT",
+    "trades_file": "data/raw/bybit_archive/ORDIUSDT/ORDIUSDT2026-10-01.csv.gz",
+    "trades_file_sha256": "a59e3cd00ff8950fe492685dd33bd200bbdbdb668bd173cadf13c64069deec70"
+  },
+  "summary": {
+    "book_events": 339156,
+    "buy_notional": "877111.45547",
+    "buy_qty": "190821.41",
+    "buy_trades": 11802,
+    "checkpoint_comparisons": 1,
+    "checkpoint_matches": 1,
+    "confirmed": 7,
+    "continuity_issue_counts": {
+      "SNAPSHOT_INIT": 1,
+      "SNAPSHOT_RESET": 1
+    },
+    "crossed_books": 0,
+    "cvd_notional": "86410.55496",
+    "cvd_qty": "18678.57",
+    "deltas_applied": 339154,
+    "deltas_skipped": 0,
+    "evaluations": 350811,
+    "events": 360503,
+    "final_ask_levels": 200,
+    "final_best_ask": "4.558",
+    "final_best_bid": "4.556",
+    "final_bid_levels": 200,
+    "first_ts": "2026-09-30T23:59:59.917000Z",
+    "first_ts_us": 1790812799917000,
+    "inferred_side_trades": 0,
+    "last_ts": "2026-10-02T00:00:00.211000Z",
+    "last_ts_us": 1790899200211000,
+    "rejection_counts": {
+      "ALREADY_EXTENDED": 150,
+      "BOOK_PRESSURE_REVERSAL": 21,
+      "CANDIDATE_TIMEOUT": 1,
+      "CVD_DIVERGENCE": 94,
+      "FLOW_REVERSAL": 99,
+      "INSUFFICIENT_HISTORY": 6,
+      "ISOLATED_SPIKE": 2382,
+      "SPREAD_TOO_WIDE": 28,
+      "STALE_BOOK": 6
+    },
+    "sell_notional": "790700.90051",
+    "sell_qty": "172142.84",
+    "sell_trades": 9545,
+    "sequence_gaps": 0,
+    "snapshots": 2,
+    "symbol": "ORDIUSDT",
+    "trades": 21347,
+    "transition_counts": {
+      "LONG CANDIDATE->CONFIRMED": 1,
+      "LONG CANDIDATE->REJECTED": 2,
+      "LONG CONFIRMED->IDLE": 1,
+      "LONG IDLE->REJECTED": 1440,
+      "LONG IDLE->WATCH": 266,
+      "LONG REJECTED->IDLE": 1588,
+      "LONG WATCH->CANDIDATE": 3,
+      "LONG WATCH->IDLE": 117,
+      "LONG WATCH->REJECTED": 146,
+      "SHORT CANDIDATE->CONFIRMED": 6,
+      "SHORT CANDIDATE->REJECTED": 2,
+      "SHORT CONFIRMED->IDLE": 6,
+      "SHORT IDLE->REJECTED": 976,
+      "SHORT IDLE->WATCH": 227,
+      "SHORT REJECTED->IDLE": 1078,
+      "SHORT WATCH->CANDIDATE": 8,
+      "SHORT WATCH->IDLE": 119,
+      "SHORT WATCH->REJECTED": 100
+    },
+    "transitions": 6086
+  },
+  "trades_schema_validation": {
+    "error_examples": [],
+    "records_malformed": 0,
+    "records_ok": 21347,
+    "source": "ORDIUSDT2026-10-01.csv.gz"
+  }
+}

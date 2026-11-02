@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "file": "demo_events.jsonl",
+      "identical": true,
+      "run1_sha256": "c159ea9eaaf321ef4f80ed4dabd95f45a5999b65273a04d602b684d9037b95dd",
+      "run2_sha256": "c159ea9eaaf321ef4f80ed4dabd95f45a5999b65273a04d602b684d9037b95dd"
+    },
+    {
+      "file": "signals.csv",
+      "identical": true,
+      "run1_sha256": "49e01e03f1ddd47122029caf05cab1d6db80a69676f50c6b5cb09c1f10b89c51",
+      "run2_sha256": "49e01e03f1ddd47122029caf05cab1d6db80a69676f50c6b5cb09c1f10b89c51"
+    },
+    {
+      "file": "continuity_report.json",
+      "identical": true,
+      "run1_sha256": "5025d1425239d3347a060e6c900a3873e3ef5f9760215dd6e45bc14c46c4bb07",
+      "run2_sha256": "5025d1425239d3347a060e6c900a3873e3ef5f9760215dd6e45bc14c46c4bb07"
+    },
+    {
+      "file": "replay_summary.json",
+      "identical": true,
+      "run1_sha256": "af93415b3cea318709e057b0a8f02142b92b7ffd049492e5e68b6e03fdeaa801",
+      "run2_sha256": "af93415b3cea318709e057b0a8f02142b92b7ffd049492e5e68b6e03fdeaa801"
+    }
+  ],
+  "identical": true,
+  "method": "Two independent processes replayed the same inputs with the same config; SHA-256 of every output file compared."
+}

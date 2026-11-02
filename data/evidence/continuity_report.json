@@ -1,0 +1,68 @@
+{
+  "checkpoint_comparisons": 1,
+  "checkpoint_matches": 1,
+  "dataset": {
+    "book_clock": "cts",
+    "book_file": "data/raw/bybit_archive/ORDIUSDT/2026-10-01_ORDIUSDT_ob200.data.zip",
+    "book_file_sha256": "d7adcf49d110f93fbcc756fcbcce4c3a498e0896bf7a8c2becad7c03acb18558",
+    "code_version": "0.1.0",
+    "config_sha256": "38a83e45b281fa680dace6be66b01640f56899d4448843b2a088bcec465f74a0",
+    "data_kind": "REAL historical market data (not synthetic)",
+    "dataset_id": "bybit_ORDIUSDT_2026-10-01",
+    "date": "2026-10-01",
+    "disclaimer": "Signal research demonstration only. No profitability claim.",
+    "evaluation_window_utc": [
+      null,
+      null
+    ],
+    "max_events": null,
+    "provider": "bybit_archive",
+    "symbol": "ORDIUSDT",
+    "trades_file": "data/raw/bybit_archive/ORDIUSDT/ORDIUSDT2026-10-01.csv.gz",
+    "trades_file_sha256": "a59e3cd00ff8950fe492685dd33bd200bbdbdb668bd173cadf13c64069deec70"
+  },
+  "deltas_applied": 339154,
+  "deltas_skipped": 0,
+  "failures": [],
+  "failures_total": 0,
+  "issue_counts": {
+    "SNAPSHOT_INIT": 1,
+    "SNAPSHOT_RESET": 1
+  },
+  "provider_rules_applied": [
+    "Book initialises only from a 'snapshot' message; a delta before any snapshot is rejected (DELTA_BEFORE_SNAPSHOT).",
+    "A later snapshot replaces the book; before replacing, the reconstructed book is compared level-by-level with it (checkpoint).",
+    "u == last_u -> DUPLICATE (skipped); u < last_u -> STALE_UPDATE (skipped).",
+    "u != last_u + 1 -> SEQUENCE_GAP: book invalidated, all deltas skipped until the next snapshot (RESYNC). Strict +1 contiguity is an OBSERVED property of the archive, enabled by config, not a documented Bybit guarantee.",
+    "seq <= last_seq on a delta -> SEQ_REGRESSION (warning; Bybit documents seq as the cross sequence where smaller = earlier).",
+    "Timestamp moving backwards -> TIMESTAMP_REGRESSION (warning).",
+    "Snapshot with u == 1 after prior data -> SERVICE_RESTART (Bybit-documented restart signal).",
+    "best_bid >= best_ask after applying an event -> CROSSED_BOOK (signals blocked while crossed)."
+  ],
+  "snapshot_events": [
+    {
+      "details": {},
+      "kind": "SNAPSHOT_INIT",
+      "record_type": "continuity_issue",
+      "severity": "info",
+      "symbol": "ORDIUSDT",
+      "timestamp": "2026-09-30T23:59:59.917000Z",
+      "ts_us": 1790812799917000,
+      "update_id": 26783760
+    },
+    {
+      "details": {
+        "previous_u": 27122914
+      },
+      "kind": "SNAPSHOT_RESET",
+      "record_type": "continuity_issue",
+      "severity": "info",
+      "symbol": "ORDIUSDT",
+      "timestamp": "2026-10-02T00:00:00.211000Z",
+      "ts_us": 1790899200211000,
+      "update_id": 27122914
+    }
+  ],
+  "snapshots_applied": 2,
+  "status": "PASS"
+}

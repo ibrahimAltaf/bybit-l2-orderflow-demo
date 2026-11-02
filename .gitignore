@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Secrets
+.env
+
+# Raw / normalized market data: downloaded on demand, NOT redistributed.
+# (Bybit and Tardis.dev data are subject to their own terms; see docs/LIMITATIONS.md)
+data/raw/*
+!data/raw/.gitkeep
+data/normalized/*
+!data/normalized/.gitkeep
+
+# Synthetic-demo console output (never client evidence)
+data/synthetic_demo_output/
+
+# Large derived logs (contain Bybit top-of-book prices; redistribution terms NOT VERIFIED).
+# Regenerated locally by scripts/run_demo.py; hashes are kept in evidence_manifest.json.
+data/evidence/demo_events.jsonl
+data/evidence/signals.csv
