@@ -83,6 +83,22 @@ Every Bybit file:
   within ±60 s of it;
 * the book never exceeded the advertised depth.
 
+### Independent re-verification scripts
+
+* `python scripts/verify_l2_integrity.py` is a stdlib-only second implementation. It writes
+  `data_references.json`, `DATA_REFERENCES.md` (exact URLs, filenames, sizes, SHA-256,
+  retrieval times) and `l2_integrity_report.json`. That report covers:
+  * snapshot positions, with each snapshot's `u` and `seq` relative to the previous record;
+  * the `u` increment distribution and `seq` ordering;
+  * `ts` / `cts` regressions, duplicate records, deletes of absent levels and crossed
+    books;
+  * quiet intervals, maximum and final depth, and the end-of-file reproduction.
+* `python scripts/verify_tardis_trades.py` is the stdlib-only trade comparison. It
+  documents its matching rules and writes `tardis_trade_comparison.json`.
+  * Result: 21,347 common IDs, 0 only in either source, 0 price/size/side/symbol
+    mismatches.
+  * Timestamp |diff| ≤ 0.9 ms. Tardis has 1 ms precision; Bybit has 0.1 ms.
+
 ## 4. Schema and sequence semantics
 
 **Raw fields observed (VERIFIED, all three Bybit book files):**

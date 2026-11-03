@@ -44,7 +44,10 @@ Labels:
    It must be confirmed on the live stream.
 7. **End-of-file snapshot: OBSERVED, provenance undocumented.** Each archive file ends
    with a snapshot stamped at the next 00:00 UTC whose `u` equals the last delta's `u`.
-   Our rebuilt book matched it exactly on all three files. Bybit does not document whether
+   In the two 10000LADYSUSDT files its `seq` also equals the last delta's `seq`. In
+   ORDIUSDT its `seq` is larger. It therefore restates the book after the last delta
+   instead of adding an update (`l2_integrity_report.json`). Our rebuilt book matched it
+   exactly on all three files. Bybit does not document whether
    the matching engine or the archiving process produces it. If the archiver produces it
    from the same deltas, the match shows agreement with Bybit's own reconstruction rather
    than independent ground truth.
@@ -63,8 +66,11 @@ Labels:
    and 2025-08-22. The reconstructed book never exceeded the advertised depth, so levels
    leaving the window are deleted by the feed (OBSERVED). Liquidity beyond 200 levels is
    invisible.
-10. **100 ms batching (documented for level 200; the inter-delta gaps were measured, see
-    DATA_FEASIBILITY_REPORT §4).**
+10. **100 ms batching.** Bybit documents a 100 ms push for level 200. We measured it on the
+    publish clock `ts`, where consecutive deltas are 98–101 ms apart. On the
+    matching-engine clock `cts`, which the replay uses, consecutive deltas can be as little
+    as 3 ms apart: `cts` stamps the content of a batch, not its publication (see
+    DATA_FEASIBILITY_REPORT §4).
     * Adds and cancels at the same price inside one push net out.
     * *Execution vs. cancellation attribution is therefore an approximation.* A level
       decrease is labelled "executed" only up to the trade quantity printed at that price
@@ -91,17 +97,92 @@ Labels:
     * Top of book agreed with the Bybit archive at 96.1 % of minute marks. The cause of the
       56 disagreements (different push cadence) is **INFERRED**.
     * Tardis.dev paid days and prices are **NOT VERIFIED**.
-16. **Archive coverage.**
-    * **VERIFIED** for three files: one smaller-cap contract and one delisted contract.
-    * The delisted contract's files respond up to the delivery day and return 404 after
-      it. This is ENDPOINT RESPONDED (HTTP only, not downloaded).
-    * The archive start was probed only by HTTP: BTCUSDT responds on 2023-02-01 and returns
-      404 on 2023-01-01. This is ENDPOINT RESPONDED.
-    * Listing-day coverage for new contracts and per-symbol gaps across the universe are
-      **NOT VERIFIED**.
+16. **Archive coverage overall.**
+    * Downloaded and fully parsed: exactly three book files and three trade files (listed
+      with exact URLs and SHA-256 in `data/evidence/DATA_REFERENCES.md`).
+    * Nothing else in the archive was downloaded.
 17. **Open interest, funding, liquidations, regime features, universe selection and
     new-listing handling are PLANNED.** This demo does not ingest them. Historical
     availability of those series is **NOT VERIFIED** here.
+
+## Coverage: newly listed symbols
+
+* **Verified:** nothing. No newly listed contract was downloaded or parsed.
+* **HTTP existence checks only:** none were made for a newly listed contract. The only
+  archive-start probe was on BTCUSDT: the ob500 file responds for 2023-02-01, 2023-03-01
+  and 2023-04-01, and returns 404 for 2023-01-01. This is ENDPOINT RESPONDED: an HTTP
+  status only, not downloaded, and the exact start was not bisected.
+* **Possible missing early history (NOT VERIFIED):**
+  * whether the archive has a file for a contract's listing day;
+  * whether that file starts with a snapshot at listing time or at 00:00 UTC;
+  * whether first-day files are complete;
+  * whether the archive start date (around 2023-02 for BTCUSDT) applies to all symbols.
+* **Consequence:** research that needs first-hours behaviour of new listings cannot rely on
+  this demo's evidence. It needs a listing-day scan in the awarded project.
+
+## Coverage: delisted symbols
+
+* **Downloaded and verified:** 10000LADYSUSDT book and trades for 2025-06-01 (ob500) and
+  2025-10-01 (ob200). Every record was parsed, `u` was +1 on every delta, and the
+  end-of-file snapshot was reproduced. The Bybit `instruments-info` response reported
+  `status: Closed` and `deliveryTime` 2025-10-06T09:00Z (response inspected 2026-11-02).
+* **Verified availability:** files for a contract that is now closed remain downloadable
+  (the two days above).
+* **Post-delisting behaviour, from HTTP status only (ENDPOINT RESPONDED):**
+  * book and trade files respond for 2025-10-05 and 2025-10-06 (the delivery day);
+  * they return 404 for 2025-10-07 and 2025-10-08.
+  * Not downloaded: whether the delivery-day file ends at delivery time or contains an
+    abnormal end.
+* **Inferred, not verified:**
+  * that other delisted contracts are retained the same way;
+  * that no file in between is missing;
+  * that the archive is never purged later.
+
+## Missing historical data
+
+* **Within the three verified files:**
+  * no `u` increment other than +1;
+  * no malformed record, duplicate record, timestamp regression or crossed book.
+* **Quiet intervals:** the longest periods without any book message are listed per file
+  in `l2_integrity_report.json` (`largest_quiet_intervals`). The archive has no heartbeat,
+  so a quiet interval is not proof of missing data. Only the `u` sequence can reveal
+  missing updates.
+* **Unavailable files:**
+  * The downloader treats HTTP 404 as "not published" and fails immediately with
+    `DownloadError`, without retrying (tested).
+  * The demo then stops with an explicit message. It never substitutes another day,
+    another provider, OHLCV or synthetic data.
+  * Transient errors (5xx, 429, network) are retried three times with backoff.
+* **Unknown coverage:**
+  * gaps, days without files, or files with internal `u` jumps for any other symbol or
+    date are **NOT VERIFIED**;
+  * the awarded project needs a batch scan before using a symbol/date.
+
+## Full project: remaining work (none of these acceptance items has been done or passed)
+
+* **Universe and data:**
+  * full-universe research (symbol selection, coverage scan, liquidity filters);
+  * open interest, funding and liquidation data;
+  * live WebSocket ingestion with gap/resync.
+* **Validation protocol:**
+  * a frozen-parameter process, with thresholds fixed before any evaluation data is seen;
+  * an untouched historical out-of-sample period;
+  * at least 100 independent closed trades **per direction** (LONG and SHORT), if
+    achievable under the final criteria.
+* **Performance measurement, which does not exist in this demo:**
+  * separate LONG / SHORT profit factor and expectancy;
+  * realistic trading costs (fees, spread, slippage, funding);
+  * maximum drawdown;
+  * a top-five-winner removal test;
+  * missed-move analysis;
+  * filter-ablation analysis.
+* **Operational:**
+  * four full weeks on Bybit Demo Trading;
+  * a final reproducibility package;
+  * a ten-business-day independent review.
+
+A technically successful replay is not evidence of a profitable or predictive strategy.
+This repository makes no such claim.
 
 ## Evidence scope
 

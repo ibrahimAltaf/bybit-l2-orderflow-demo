@@ -52,7 +52,7 @@ Period         2026-09-30T23:59:59.917Z -> 2026-10-02T00:00:00.211Z   (book cloc
 Events         360,503  (339,156 book, 21,347 trades)
 Continuity     PASS  (0 failures; issue log: SNAPSHOT_INIT=1, SNAPSHOT_RESET=1)
 
-BOOK           snapshots 2, deltas applied 339,154, skipped 0, sequence gaps 0, crossed 0
+BOOK           snapshots 2, deltas applied 339,154, skipped 0, SEQUENCE_GAP events 0 (u != previous u + 1 rule), crossed 0
                closing snapshot vs reconstruction: 1/1 match (all 400 levels)
                final best bid/ask 4.556 / 4.558 (200/200 levels)
 
@@ -175,6 +175,25 @@ of the stage being evaluated.
    transitions × 10 features.
 7. A code search found no `shift(-1)`, centered or forward-looking window, forward fill,
    resampling, dataframe, or whole-day statistic.
+
+8. **Real-data causality** (`python scripts/verify_no_lookahead.py`):
+   * The real day is replayed and stopped at 2026-10-01T08:00:00Z.
+   * It is replayed again with every event after 08:00 falsified: trade sides are flipped
+     and sizes multiplied by 1000, and book quantities by 7.
+   * In both runs, all 1,875 transitions at or before 08:00 are byte-identical to the
+     delivered full-day log. Output: `no_lookahead_verification.json`.
+9. **Determinism** (`python scripts/verify_determinism.py`): two separate OS processes
+   run `python -m bybit_demo.cli replay`. The SHA-256 of the 4 analytical files is
+   compared run against run, and against the delivered logs. Output:
+   `determinism_verification.json`.
+
+**Feature update order.** For each event in merged order:
+1. The event is applied: a trade updates CVD, the rolling windows and the pending
+   execution attribution; a book event goes through the continuity check, then the book,
+   then the liquidity-flow accounting and mid-price trackers.
+2. When the next event has a later timestamp, the windows are advanced to "now", one
+   `FeatureVector` is computed, and the LONG machine and then the SHORT machine evaluate
+   it.
 
 Not independently recomputed: the volatility, absorption and liquidity-flow features
 (covered by 1–5 only).

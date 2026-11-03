@@ -247,7 +247,10 @@ def print_replay_report(cfg: DemoConfig, res: ReplayResult, *, max_rows: int = 4
         f"Snapshots: {s.snapshots}   Deltas applied: {s.deltas_applied:,}   "
         f"skipped: {s.deltas_skipped}"
     )
-    console.print(f"Sequence gaps: {s.sequence_gaps}   Crossed books: {s.crossed_books}")
+    console.print(
+        f"SEQUENCE_GAP events (u != last u + 1): {s.sequence_gaps}   "
+        f"Crossed books: {s.crossed_books}"
+    )
     console.print(
         "Checkpoint snapshots matched by reconstruction: "
         f"{s.checkpoint_matches}/{s.checkpoint_comparisons}"

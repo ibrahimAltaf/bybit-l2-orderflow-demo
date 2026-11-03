@@ -1,0 +1,42 @@
+{
+  "all_trades_match": true,
+  "generator": "scripts/verify_tardis_trades.py (stdlib only)",
+  "matching": {
+    "compared_fields": "price (Decimal), size/amount (Decimal), side (lower-case), symbol",
+    "key": "exact string equality of Bybit trdMatchID and Tardis id",
+    "timestamp": "normalized to integer microseconds; reported, not matched"
+  },
+  "results": {
+    "common_ids_with_any_field_mismatch": 0,
+    "common_trade_ids": 21347,
+    "field_mismatch_counts": {},
+    "mismatch_examples": [],
+    "only_in_bybit": 0,
+    "only_in_tardis": 0,
+    "timestamp_abs_diff_us": {
+      "p0": 0,
+      "p100": 900,
+      "p50": 400,
+      "p99": 900
+    },
+    "timestamps_identical": 2250
+  },
+  "source_a": {
+    "duplicate_ids": 0,
+    "out_of_order_rows": 0,
+    "provider": "Bybit official archive",
+    "rows": 21347,
+    "sha256": "a59e3cd00ff8950fe492685dd33bd200bbdbdb668bd173cadf13c64069deec70",
+    "url": "https://public.bybit.com/trading/ORDIUSDT/ORDIUSDT2026-10-01.csv.gz"
+  },
+  "source_b": {
+    "duplicate_ids": 0,
+    "out_of_order_rows": 0,
+    "provider": "Tardis.dev free first-of-month sample",
+    "rows": 21347,
+    "sha256": "80ba6285673a8a70bd365dbfbea9d68b8c3713a258be35e38b8c6c493baa0908",
+    "url": "https://datasets.tardis.dev/v1/bybit/trades/2026/10/01/ORDIUSDT.csv.gz"
+  },
+  "symbol": "ORDIUSDT",
+  "utc_date": "2026-10-01"
+}

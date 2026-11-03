@@ -1,0 +1,38 @@
+{
+  "cut_utc": "2026-10-01T08:00:00Z",
+  "delivered_log": {
+    "transitions_at_or_before_cut": 1875,
+    "transitions_total": 6086
+  },
+  "future_perturbation_replay": {
+    "first_differing_index": null,
+    "identical_to_delivered_log": true,
+    "perturbation": "after cut: trade side flipped and size x1000; book quantities x7",
+    "transitions_at_or_before_cut": 1875
+  },
+  "generator": "scripts/verify_no_lookahead.py",
+  "independent_recompute": {
+    "exit_code": 0,
+    "features_checked_per_transition": [
+      "cvd_short_usdt",
+      "cvd_medium_usdt",
+      "imb_medium",
+      "trades_short",
+      "cvd_session_usdt",
+      "best_bid",
+      "best_ask",
+      "update_id",
+      "depth_bid_usdt",
+      "depth_ask_usdt"
+    ],
+    "mismatching_transitions": 0,
+    "stdout": "checked 6086 transitions x 10 features; mismatches: 0; raw-file hashes match evidence header: True",
+    "transitions_checked": 6086
+  },
+  "pass": true,
+  "prefix_replay": {
+    "first_differing_index": null,
+    "identical_to_delivered_log": true,
+    "transitions_at_or_before_cut": 1875
+  }
+}

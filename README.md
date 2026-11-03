@@ -83,6 +83,11 @@ python -m bybit_demo.cli replay                      # replay primary dataset ->
 python -m bybit_demo.cli replay --out out/ --start 2026-10-01T03:00:00Z --end 2026-10-01T04:00:00Z
 python -m bybit_demo.cli evidence                    # replay + second-process replay + manifest
 python scripts/independent_recompute.py              # stdlib-only check of logged features
+python scripts/verify_l2_integrity.py                # raw snapshot/delta integrity (stdlib only)
+python scripts/verify_tardis_trades.py               # Bybit vs Tardis.dev trade comparison (stdlib only)
+python scripts/verify_no_lookahead.py                # recompute + prefix + future-perturbation replays
+python scripts/verify_determinism.py                 # two separate replay processes vs delivered logs
+python scripts/build_evidence_package.py             # client evidence package + ZIP (clean tree)
 python scripts/benchmark_replay.py                   # runtime / throughput / peak memory
 ```
 
@@ -137,6 +142,7 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 | Document | Purpose |
 |---|---|
 | [docs/Client_Guide.pdf](docs/Client_Guide.pdf) | Illustrated client guide: installation, running the demo, results |
+| [START_HERE.md](START_HERE.md) | Single entry point for independent verification |
 | [docs/CLIENT_SUMMARY.md](docs/CLIENT_SUMMARY.md) | One-page summary and component status matrix |
 | [docs/DATA_FEASIBILITY_REPORT.md](docs/DATA_FEASIBILITY_REPORT.md) | Providers, URLs, files, hashes, sequence semantics, cost |
 | [docs/TECHNICAL_DEMO_REPORT.md](docs/TECHNICAL_DEMO_REPORT.md) | Components, results, audit chains, rejections, change log, performance |

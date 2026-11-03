@@ -1,0 +1,67 @@
+{
+  "datasets": [
+    {
+      "book": {
+        "bytes": 10440797,
+        "filename": "2025-06-01_10000LADYSUSDT_ob500.data.zip",
+        "provider_last_modified": "Mon, 02 Jun 2025 00:05:39 GMT",
+        "retrieved_at_utc": "2026-11-01T22:09:24.635322+00:00",
+        "sha256": "8e65c11dd72d9c9f8689e5504b92c24606e30d01594098d774da4e41fdabd0c4",
+        "url": "https://quote-saver.bycsi.com/orderbook/linear/10000LADYSUSDT/2025-06-01_10000LADYSUSDT_ob500.data.zip"
+      },
+      "dataset_id": "bybit_10000LADYSUSDT_2025-06-01",
+      "symbol": "10000LADYSUSDT",
+      "trades": {
+        "bytes": 891157,
+        "filename": "10000LADYSUSDT2025-06-01.csv.gz",
+        "provider_last_modified": "Mon, 02 Jun 2025 01:06:41 GMT",
+        "retrieved_at_utc": "2026-11-01T22:08:58.482062+00:00",
+        "sha256": "513a14b9385ac3e66b3ae208427e8b0901b5fa12c5872a684fba7eb13c5b855f",
+        "url": "https://public.bybit.com/trading/10000LADYSUSDT/10000LADYSUSDT2025-06-01.csv.gz"
+      },
+      "utc_date": "2025-06-01"
+    },
+    {
+      "book": {
+        "bytes": 15292185,
+        "filename": "2025-10-01_10000LADYSUSDT_ob200.data.zip",
+        "provider_last_modified": "Thu, 02 Oct 2025 00:08:35 GMT",
+        "retrieved_at_utc": "2026-11-01T22:08:56.544094+00:00",
+        "sha256": "35efe269e3800329c68ef97a4fa60474fa94e65350129e058be64a17a4164394",
+        "url": "https://quote-saver.bycsi.com/orderbook/linear/10000LADYSUSDT/2025-10-01_10000LADYSUSDT_ob200.data.zip"
+      },
+      "dataset_id": "bybit_10000LADYSUSDT_2025-10-01",
+      "symbol": "10000LADYSUSDT",
+      "trades": {
+        "bytes": 1892178,
+        "filename": "10000LADYSUSDT2025-10-01.csv.gz",
+        "provider_last_modified": "Thu, 02 Oct 2025 01:11:24 GMT",
+        "retrieved_at_utc": "2026-11-01T22:08:46.042205+00:00",
+        "sha256": "abed33fe15fe250d11c9ddb875bbd8e987a04e2d1b57be273c710e1155d3fb56",
+        "url": "https://public.bybit.com/trading/10000LADYSUSDT/10000LADYSUSDT2025-10-01.csv.gz"
+      },
+      "utc_date": "2025-10-01"
+    },
+    {
+      "book": {
+        "bytes": 13241285,
+        "filename": "2026-10-01_ORDIUSDT_ob200.data.zip",
+        "provider_last_modified": "Fri, 02 Oct 2026 00:09:07 GMT",
+        "retrieved_at_utc": "2026-11-01T22:08:40.756460+00:00",
+        "sha256": "d7adcf49d110f93fbcc756fcbcce4c3a498e0896bf7a8c2becad7c03acb18558",
+        "url": "https://quote-saver.bycsi.com/orderbook/linear/ORDIUSDT/2026-10-01_ORDIUSDT_ob200.data.zip"
+      },
+      "dataset_id": "bybit_ORDIUSDT_2026-10-01",
+      "symbol": "ORDIUSDT",
+      "trades": {
+        "bytes": 923498,
+        "filename": "ORDIUSDT2026-10-01.csv.gz",
+        "provider_last_modified": "Fri, 02 Oct 2026 01:14:17 GMT",
+        "retrieved_at_utc": "2026-11-01T22:08:06.999062+00:00",
+        "sha256": "a59e3cd00ff8950fe492685dd33bd200bbdbdb668bd173cadf13c64069deec70",
+        "url": "https://public.bybit.com/trading/ORDIUSDT/ORDIUSDT2026-10-01.csv.gz"
+      },
+      "utc_date": "2026-10-01"
+    }
+  ]
+}

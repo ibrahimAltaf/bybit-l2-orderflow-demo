@@ -1,0 +1,539 @@
+{
+  "all_datasets_pass": true,
+  "datasets": [
+    {
+      "all_checks_pass": true,
+      "book": {
+        "archive_member": "2025-06-01_10000LADYSUSDT_ob500.data",
+        "checks": {
+          "book_records_within_utc_day_plus_minus_60s": true,
+          "depth_never_exceeds_advertised": true,
+          "end_of_file_snapshot_reproduced": true,
+          "first_record_is_snapshot": true,
+          "never_crossed_or_locked": true,
+          "no_cts_regression": true,
+          "no_delta_before_first_snapshot": true,
+          "no_identical_duplicate_records": true,
+          "no_malformed_records": true,
+          "no_ts_regression": true,
+          "seq_strictly_increasing_between_deltas": true,
+          "update_id_plus_one_on_every_delta": true
+        },
+        "counts": {
+          "cts_after_ts": 0,
+          "cts_regressions": 0,
+          "deletes_of_absent_levels": 0,
+          "deltas_before_first_snapshot": 0,
+          "identical_consecutive_records": 0,
+          "malformed_records": 0,
+          "records_leaving_an_empty_side": 0,
+          "records_leaving_book_crossed_or_locked": 0,
+          "seq_not_increasing_between_deltas": 0,
+          "ts_regressions": 0,
+          "update_id_not_plus_one": 0
+        },
+        "file": "2025-06-01_10000LADYSUSDT_ob500.data.zip",
+        "final_reconstructed_book": {
+          "ask_levels": 500,
+          "best_ask": "0.0004549",
+          "best_bid": "0.0004546",
+          "bid_levels": 500
+        },
+        "first_record_ts": "2025-06-01T00:00:00.905Z",
+        "inter_record_gap_ts_ms": {
+          "max": 8701,
+          "p0": 26,
+          "p0.1": 82,
+          "p50": 101,
+          "p99": 1800
+        },
+        "largest_quiet_intervals": [
+          {
+            "from": "2025-06-01T19:41:18.601Z",
+            "seconds": 8.701,
+            "to": "2025-06-01T19:41:27.302Z"
+          },
+          {
+            "from": "2025-06-01T22:59:42.702Z",
+            "seconds": 8.204,
+            "to": "2025-06-01T22:59:50.906Z"
+          },
+          {
+            "from": "2025-06-01T23:26:42.403Z",
+            "seconds": 8.0,
+            "to": "2025-06-01T23:26:50.403Z"
+          },
+          {
+            "from": "2025-06-01T04:58:11.101Z",
+            "seconds": 7.101,
+            "to": "2025-06-01T04:58:18.202Z"
+          },
+          {
+            "from": "2025-06-01T20:12:29.502Z",
+            "seconds": 7.1,
+            "to": "2025-06-01T20:12:36.602Z"
+          }
+        ],
+        "last_record_ts": "2025-06-02T00:00:00.902Z",
+        "malformed_examples": [],
+        "max_levels_held": {
+          "advertised_depth": 500,
+          "ask": 500,
+          "bid": 500
+        },
+        "publish_latency_ts_minus_cts_ms": {
+          "max": 341,
+          "p0": 1,
+          "p50": 41,
+          "p99": 99
+        },
+        "quiet_intervals_longer_than_s": {
+          "30": 0,
+          "5": 59,
+          "60": 0
+        },
+        "records_by_type": {
+          "delta": 372857,
+          "snapshot": 2
+        },
+        "records_total": 372859,
+        "snapshots": [
+          {
+            "ask_levels": 500,
+            "bid_levels": 500,
+            "cts": "2025-06-01T00:00:00.883Z",
+            "line": 1,
+            "position": "first record",
+            "seq": 273378153403,
+            "ts": "2025-06-01T00:00:00.905Z",
+            "u": 21028146,
+            "zero_quantity_levels": 0
+          },
+          {
+            "ask_levels": 500,
+            "bid_levels": 500,
+            "cts": "2025-06-02T00:00:00.561Z",
+            "line": 372859,
+            "mismatched_levels": 0,
+            "position": "inside file",
+            "rebuilt_book_equals_this_snapshot": true,
+            "seq": 273705723987,
+            "seq_minus_previous_record_seq": 0,
+            "ts": "2025-06-02T00:00:00.902Z",
+            "u": 21401003,
+            "u_minus_previous_record_u": 0,
+            "zero_quantity_levels": 0
+          }
+        ],
+        "update_id_increment_distribution_over_deltas": {
+          "+1": 372857
+        }
+      },
+      "dataset_id": "bybit_10000LADYSUSDT_2025-06-01",
+      "raw_files_match_manifest_sha256_and_size": true,
+      "symbol": "10000LADYSUSDT",
+      "trades": {
+        "checks": {
+          "all_rows_inside_utc_day": true,
+          "chronological": true,
+          "no_duplicate_trade_ids": true,
+          "no_malformed_rows": true,
+          "only_buy_sell_side_values": true
+        },
+        "columns": [
+          "timestamp",
+          "symbol",
+          "side",
+          "size",
+          "price",
+          "tickDirection",
+          "trdMatchID",
+          "grossValue",
+          "homeNotional",
+          "foreignNotional",
+          "RPI"
+        ],
+        "counts": {
+          "duplicate_trade_ids": 0,
+          "malformed_rows": 0,
+          "out_of_order_rows": 0,
+          "rows_outside_utc_day": 0,
+          "rpi_rows": 0
+        },
+        "file": "10000LADYSUSDT2025-06-01.csv.gz",
+        "first_trade": "2025-06-01T00:00:05.497Z",
+        "last_trade": "2025-06-01T23:59:48.253Z",
+        "rows": 22605,
+        "side_values": {
+          "Buy": 11392,
+          "Sell": 11213
+        }
+      },
+      "utc_date": "2025-06-01"
+    },
+    {
+      "all_checks_pass": true,
+      "book": {
+        "archive_member": "2025-10-01_10000LADYSUSDT_ob200.data",
+        "checks": {
+          "book_records_within_utc_day_plus_minus_60s": true,
+          "depth_never_exceeds_advertised": true,
+          "end_of_file_snapshot_reproduced": true,
+          "first_record_is_snapshot": true,
+          "never_crossed_or_locked": true,
+          "no_cts_regression": true,
+          "no_delta_before_first_snapshot": true,
+          "no_identical_duplicate_records": true,
+          "no_malformed_records": true,
+          "no_ts_regression": true,
+          "seq_strictly_increasing_between_deltas": true,
+          "update_id_plus_one_on_every_delta": true
+        },
+        "counts": {
+          "cts_after_ts": 0,
+          "cts_regressions": 0,
+          "deletes_of_absent_levels": 0,
+          "deltas_before_first_snapshot": 0,
+          "identical_consecutive_records": 0,
+          "malformed_records": 0,
+          "records_leaving_an_empty_side": 0,
+          "records_leaving_book_crossed_or_locked": 0,
+          "seq_not_increasing_between_deltas": 0,
+          "ts_regressions": 0,
+          "update_id_not_plus_one": 0
+        },
+        "file": "2025-10-01_10000LADYSUSDT_ob200.data.zip",
+        "final_reconstructed_book": {
+          "ask_levels": 200,
+          "best_ask": "0.0002341",
+          "best_bid": "0.0002339",
+          "bid_levels": 200
+        },
+        "first_record_ts": "2025-10-01T00:00:00.435Z",
+        "inter_record_gap_ts_ms": {
+          "max": 6801,
+          "p0": 60,
+          "p0.1": 97,
+          "p50": 100,
+          "p99": 799
+        },
+        "largest_quiet_intervals": [
+          {
+            "from": "2025-10-01T22:07:38.634Z",
+            "seconds": 6.801,
+            "to": "2025-10-01T22:07:45.435Z"
+          },
+          {
+            "from": "2025-10-01T13:09:31.034Z",
+            "seconds": 5.701,
+            "to": "2025-10-01T13:09:36.735Z"
+          },
+          {
+            "from": "2025-10-01T18:57:25.634Z",
+            "seconds": 4.9,
+            "to": "2025-10-01T18:57:30.534Z"
+          },
+          {
+            "from": "2025-10-01T00:55:10.634Z",
+            "seconds": 4.801,
+            "to": "2025-10-01T00:55:15.435Z"
+          },
+          {
+            "from": "2025-10-01T02:46:57.035Z",
+            "seconds": 4.699,
+            "to": "2025-10-01T02:47:01.734Z"
+          }
+        ],
+        "last_record_ts": "2025-10-02T00:00:00.434Z",
+        "malformed_examples": [],
+        "max_levels_held": {
+          "advertised_depth": 200,
+          "ask": 200,
+          "bid": 200
+        },
+        "publish_latency_ts_minus_cts_ms": {
+          "max": 378,
+          "p0": 1,
+          "p50": 19,
+          "p99": 98
+        },
+        "quiet_intervals_longer_than_s": {
+          "30": 0,
+          "5": 2,
+          "60": 0
+        },
+        "records_by_type": {
+          "delta": 553441,
+          "snapshot": 2
+        },
+        "records_total": 553443,
+        "snapshots": [
+          {
+            "ask_levels": 200,
+            "bid_levels": 200,
+            "cts": "2025-10-01T00:00:00.057Z",
+            "line": 1,
+            "position": "first record",
+            "seq": 318286565306,
+            "ts": "2025-10-01T00:00:00.435Z",
+            "u": 4423756,
+            "zero_quantity_levels": 0
+          },
+          {
+            "ask_levels": 200,
+            "bid_levels": 200,
+            "cts": "2025-10-02T00:00:00.207Z",
+            "line": 553443,
+            "mismatched_levels": 0,
+            "position": "inside file",
+            "rebuilt_book_equals_this_snapshot": true,
+            "seq": 318509458903,
+            "seq_minus_previous_record_seq": 0,
+            "ts": "2025-10-02T00:00:00.434Z",
+            "u": 4977197,
+            "u_minus_previous_record_u": 0,
+            "zero_quantity_levels": 0
+          }
+        ],
+        "update_id_increment_distribution_over_deltas": {
+          "+1": 553441
+        }
+      },
+      "dataset_id": "bybit_10000LADYSUSDT_2025-10-01",
+      "raw_files_match_manifest_sha256_and_size": true,
+      "symbol": "10000LADYSUSDT",
+      "trades": {
+        "checks": {
+          "all_rows_inside_utc_day": true,
+          "chronological": true,
+          "no_duplicate_trade_ids": true,
+          "no_malformed_rows": true,
+          "only_buy_sell_side_values": true
+        },
+        "columns": [
+          "timestamp",
+          "symbol",
+          "side",
+          "size",
+          "price",
+          "tickDirection",
+          "trdMatchID",
+          "grossValue",
+          "homeNotional",
+          "foreignNotional",
+          "RPI"
+        ],
+        "counts": {
+          "duplicate_trade_ids": 0,
+          "malformed_rows": 0,
+          "out_of_order_rows": 0,
+          "rows_outside_utc_day": 0,
+          "rpi_rows": 0
+        },
+        "file": "10000LADYSUSDT2025-10-01.csv.gz",
+        "first_trade": "2025-10-01T00:01:00.417Z",
+        "last_trade": "2025-10-01T23:58:59.616Z",
+        "rows": 48184,
+        "side_values": {
+          "Buy": 22743,
+          "Sell": 25441
+        }
+      },
+      "utc_date": "2025-10-01"
+    },
+    {
+      "all_checks_pass": true,
+      "book": {
+        "archive_member": "2026-10-01_ORDIUSDT_ob200.data",
+        "checks": {
+          "book_records_within_utc_day_plus_minus_60s": true,
+          "depth_never_exceeds_advertised": true,
+          "end_of_file_snapshot_reproduced": true,
+          "first_record_is_snapshot": true,
+          "never_crossed_or_locked": true,
+          "no_cts_regression": true,
+          "no_delta_before_first_snapshot": true,
+          "no_identical_duplicate_records": true,
+          "no_malformed_records": true,
+          "no_ts_regression": true,
+          "seq_strictly_increasing_between_deltas": true,
+          "update_id_plus_one_on_every_delta": true
+        },
+        "counts": {
+          "cts_after_ts": 0,
+          "cts_regressions": 0,
+          "deletes_of_absent_levels": 0,
+          "deltas_before_first_snapshot": 0,
+          "identical_consecutive_records": 0,
+          "malformed_records": 0,
+          "records_leaving_an_empty_side": 0,
+          "records_leaving_book_crossed_or_locked": 0,
+          "seq_not_increasing_between_deltas": 0,
+          "ts_regressions": 0,
+          "update_id_not_plus_one": 0
+        },
+        "file": "2026-10-01_ORDIUSDT_ob200.data.zip",
+        "final_reconstructed_book": {
+          "ask_levels": 200,
+          "best_ask": "4.558",
+          "best_bid": "4.556",
+          "bid_levels": 200
+        },
+        "first_record_ts": "2026-10-01T00:00:00.316Z",
+        "inter_record_gap_ts_ms": {
+          "max": 10300,
+          "p0": 0,
+          "p0.1": 98,
+          "p50": 101,
+          "p99": 1999
+        },
+        "largest_quiet_intervals": [
+          {
+            "from": "2026-10-01T22:48:36.215Z",
+            "seconds": 10.3,
+            "to": "2026-10-01T22:48:46.515Z"
+          },
+          {
+            "from": "2026-10-01T04:27:07.416Z",
+            "seconds": 10.099,
+            "to": "2026-10-01T04:27:17.515Z"
+          },
+          {
+            "from": "2026-10-01T22:42:22.115Z",
+            "seconds": 10.001,
+            "to": "2026-10-01T22:42:32.116Z"
+          },
+          {
+            "from": "2026-10-01T05:59:46.416Z",
+            "seconds": 9.901,
+            "to": "2026-10-01T05:59:56.317Z"
+          },
+          {
+            "from": "2026-10-01T21:59:32.816Z",
+            "seconds": 9.8,
+            "to": "2026-10-01T21:59:42.616Z"
+          }
+        ],
+        "last_record_ts": "2026-10-02T00:00:00.316Z",
+        "malformed_examples": [],
+        "max_levels_held": {
+          "advertised_depth": 200,
+          "ask": 200,
+          "bid": 200
+        },
+        "publish_latency_ts_minus_cts_ms": {
+          "max": 399,
+          "p0": 0,
+          "p50": 24,
+          "p99": 99
+        },
+        "quiet_intervals_longer_than_s": {
+          "30": 0,
+          "5": 168,
+          "60": 0
+        },
+        "records_by_type": {
+          "delta": 339154,
+          "snapshot": 2
+        },
+        "records_total": 339156,
+        "snapshots": [
+          {
+            "ask_levels": 200,
+            "bid_levels": 200,
+            "cts": "2026-09-30T23:59:59.917Z",
+            "line": 1,
+            "position": "first record",
+            "seq": 397071433431,
+            "ts": "2026-10-01T00:00:00.316Z",
+            "u": 26783760,
+            "zero_quantity_levels": 0
+          },
+          {
+            "ask_levels": 200,
+            "bid_levels": 200,
+            "cts": "2026-10-02T00:00:00.211Z",
+            "line": 339156,
+            "mismatched_levels": 0,
+            "position": "inside file",
+            "rebuilt_book_equals_this_snapshot": true,
+            "seq": 397288185666,
+            "seq_minus_previous_record_seq": 951,
+            "ts": "2026-10-02T00:00:00.316Z",
+            "u": 27122914,
+            "u_minus_previous_record_u": 0,
+            "zero_quantity_levels": 0
+          }
+        ],
+        "update_id_increment_distribution_over_deltas": {
+          "+1": 339154
+        }
+      },
+      "dataset_id": "bybit_ORDIUSDT_2026-10-01",
+      "raw_files_match_manifest_sha256_and_size": true,
+      "symbol": "ORDIUSDT",
+      "trades": {
+        "checks": {
+          "all_rows_inside_utc_day": true,
+          "chronological": true,
+          "no_duplicate_trade_ids": true,
+          "no_malformed_rows": true,
+          "only_buy_sell_side_values": true
+        },
+        "columns": [
+          "timestamp",
+          "symbol",
+          "side",
+          "size",
+          "price",
+          "tickDirection",
+          "trdMatchID",
+          "grossValue",
+          "homeNotional",
+          "foreignNotional",
+          "RPI"
+        ],
+        "counts": {
+          "duplicate_trade_ids": 0,
+          "malformed_rows": 0,
+          "out_of_order_rows": 0,
+          "rows_outside_utc_day": 0,
+          "rpi_rows": 544
+        },
+        "file": "ORDIUSDT2026-10-01.csv.gz",
+        "first_trade": "2026-10-01T00:00:02.071Z",
+        "last_trade": "2026-10-01T23:59:25.761Z",
+        "rows": 21347,
+        "side_values": {
+          "Buy": 11802,
+          "Sell": 9545
+        }
+      },
+      "utc_date": "2026-10-01"
+    }
+  ],
+  "generator": "scripts/verify_l2_integrity.py (stdlib only)",
+  "semantics": {
+    "bybit_documented": [
+      "type is 'snapshot' or 'delta'; a new snapshot means: reset the local book.",
+      "u is the 'update ID'; u == 1 on a snapshot signals a service restart.",
+      "seq is the cross sequence: a smaller seq was generated earlier.",
+      "ts = system generation time (ms); cts = matching-engine time (ms).",
+      "quantity '0' deletes the price level.",
+      "Linear level-200 data is pushed every 100 ms; RPI orders are not included.",
+      "NOT documented: that u increases by exactly 1 per delta.",
+      "NOT documented: the archive file layout or who writes the last snapshot.",
+      "OBSERVED here: the end-of-file snapshot repeats the last delta's u; in the two 10000LADYSUSDT files it also repeats its seq, in ORDIUSDT its seq is larger. It therefore restates the book after the last delta rather than adding an update."
+    ],
+    "meaning_of_zero_gaps_wording": "Earlier wording 'zero gaps' is replaced by 'update_id_not_plus_one = 0': every delta in the file had u exactly one greater than the previous record's u. This is an observation about these files under our strict rule, not a Bybit guarantee, and it says nothing about files that were not checked or about the live WebSocket.",
+    "observed_in_these_files": "see per-dataset 'counts', 'snapshots' and 'checks'",
+    "rules_enforced_by_bybit_demo": [
+      "delta before any snapshot -> rejected (DELTA_BEFORE_SNAPSHOT)",
+      "u == previous u -> DUPLICATE, skipped; u < previous u -> STALE_UPDATE, skipped",
+      "u != previous u + 1 -> SEQUENCE_GAP: book invalidated until the next snapshot (our rule, configurable; fails safe if the live stream legitimately skips IDs)",
+      "seq not increasing / ts going backwards -> warning, logged",
+      "best bid >= best ask -> CROSSED_BOOK, signals blocked",
+      "snapshot received while in sync -> compared level by level before reset"
+    ]
+  }
+}
