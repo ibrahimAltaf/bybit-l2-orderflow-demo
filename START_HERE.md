@@ -1,10 +1,20 @@
 # START HERE: Bybit L2 Feasibility Evidence Package
 
-This file is the single entry point for independent technical verification. Paths refer
-to the evidence package; in the git repository, the delivered evidence is under
-`data/evidence/` instead of `evidence/`. Every command
-below exists in this package and was executed before delivery. Recorded outputs are in
-`FINAL_DELIVERY_AUDIT.md`.
+This file is the single entry point for independent technical verification. Every command
+below exists in this repository and was executed before delivery. Recorded outputs are in
+`docs/FINAL_DELIVERY_AUDIT.md`.
+
+**Where the evidence is**
+
+| | Client ZIP (`bybit-l2-feasibility-evidence.zip`) | GitHub repository (`ibrahimAltaf/bybit-l2-orderflow-demo`, tag `pre-award-feasibility-v1`) |
+|---|---|---|
+| Evidence JSON / reports | `evidence/` | `data/evidence/` |
+| Complete replay logs (`demo_events.jsonl`, `signals.csv`) | `evidence/complete/` | Not committed (they contain exchange prices; redistribution terms not verified). Regenerate them with `python scripts/run_demo.py`; their SHA-256 values are in `docs/FINAL_DELIVERY_AUDIT.md` |
+| Evidence hashes | `evidence/evidence_hashes.sha256` | `data/evidence/evidence_manifest.json` |
+
+In the commands below, "delivered evidence" means `evidence/` in the ZIP or
+`data/evidence/` in the repository. Regenerated output is always written to
+`data/evidence/`.
 
 ## 1. What this package proves
 
@@ -45,13 +55,17 @@ Full list: `docs/LIMITATIONS.md`. Self red-team: `docs/ADVERSARIAL_REVIEW.md`.
 
 ## 3. Requirements
 
-* Python **3.12** (3.12.x), git not required, internet for the first run (~70 MB).
+* Python **3.12** (3.12.x), internet for the first run (~70 MB); git only if you clone.
 * No account, API key or environment variable.
 * Tested on Windows 11 / Python 3.12.10. Other operating systems were not tested.
 
-## 4. Install (from the folder that contains this file)
+## 4. Install
+
+From the extracted ZIP folder, or from a clone:
 
 ```bash
+git clone --branch pre-award-feasibility-v1 https://github.com/ibrahimAltaf/bybit-l2-orderflow-demo.git
+cd bybit-l2-orderflow-demo          # skip both lines when using the ZIP
 python -m venv .venv                 # Windows: py -3.12 -m venv .venv
 .venv\Scripts\activate               # macOS/Linux: source .venv/bin/activate
 pip install -e ".[dev]"
@@ -88,7 +102,7 @@ The exact URLs and hashes are in `evidence/DATA_REFERENCES.md`.
 | 10 | No-lookahead verification | `python scripts/verify_no_lookahead.py` | recompute 0 mismatches; prefix and perturbed replays identical |
 | 11 | Determinism verification (two separate processes) | `python scripts/verify_determinism.py` | all 4 analytical files identical, and identical to delivered |
 | 12 | Tests, lint, types | `python -m pytest` · `ruff check src tests scripts` · `mypy` | 151 passed · clean · clean |
-| 13 | Compare your regenerated evidence with the delivered evidence | `python scripts/compare_evidence.py --delivered evidence` | every file IDENTICAL except `run_info.json` / `evidence_manifest.json` |
+| 13 | Compare your regenerated evidence with the delivered evidence (ZIP folder) | `python scripts/compare_evidence.py --delivered evidence` | every file IDENTICAL except `run_info.json` / `evidence_manifest.json` |
 
 Verify the delivered files themselves: `cd evidence && sha256sum -c evidence_hashes.sha256`.
 On Windows without `sha256sum`, run `certutil -hashfile <file> SHA256` per file.

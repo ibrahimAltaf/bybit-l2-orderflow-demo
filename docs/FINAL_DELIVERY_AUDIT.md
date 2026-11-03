@@ -83,7 +83,7 @@ evaluated stage. Hashes for all evidence files are in `evidence/evidence_hashes.
 ## 5. Files added or changed for this delivery
 
 * **Added:**
-  * `START_HERE.md` and `FINAL_DELIVERY_AUDIT.md`;
+  * `START_HERE.md` and `docs/FINAL_DELIVERY_AUDIT.md`;
   * `scripts/verify_l2_integrity.py`, `scripts/verify_tardis_trades.py`,
     `scripts/verify_no_lookahead.py`, `scripts/verify_determinism.py`,
     `scripts/compare_evidence.py` and `scripts/build_evidence_package.py`;
@@ -134,3 +134,22 @@ evaluated stage. Hashes for all evidence files are in `evidence/evidence_hashes.
 * None of the full-project acceptance items has been run or passed: out-of-sample tests,
   ≥ 100 trades per direction, PF and expectancy, costs, drawdown, robustness tests, Demo
   Trading, and independent review.
+
+## 8. Final verification run (2026-11-03, finalized tree)
+
+Run from the tree tagged `pre-award-feasibility-v1`, immediately before tagging:
+
+| Gate | Result |
+|---|---|
+| `ruff check src tests scripts` / `ruff format --check src tests scripts` | All checks passed / 68 files already formatted |
+| `mypy` (strict) | no issues found in 68 source files |
+| `python scripts/verify_l2_integrity.py` | 3/3 datasets, all checks pass |
+| `python scripts/verify_tardis_trades.py` | 21,347 common IDs, 0 only-in-either, 0 field mismatches, max 900 µs |
+| `python scripts/verify_no_lookahead.py` | recompute 0 mismatches; 1,875/1,875 transitions identical (prefix and perturbed) |
+| `python scripts/verify_determinism.py` | 4/4 files: A = B = delivered |
+| `python -m pytest --cov --cov-branch` | 151 passed; 92 % branch coverage |
+| Stability | Re-running every verifier rewrote the evidence files. `git status` then showed **no change** to any committed evidence file |
+
+The commit SHA, the ZIP SHA-256 and the ZIP size are recorded in the client document
+*Bybit Historical L2 Technical Feasibility Evidence*, delivered with the package, and in
+`bybit-l2-feasibility-evidence.zip.sha256`. This file cannot contain its own commit hash.
