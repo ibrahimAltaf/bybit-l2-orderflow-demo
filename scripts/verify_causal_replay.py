@@ -293,6 +293,9 @@ def main() -> int:
             f"{name:32s} transitions {r['transitions_checked']:,}  "
             f"mismatches {r['mismatching_transitions']}  pass {r['pass']}"
         )
+    # Merge, so checking one scenario never discards the results of the others.
+    if OUT.exists():
+        results = {**json.loads(OUT.read_text(encoding="utf-8"))["scenarios"], **results}
     ok = bool(results) and all(r["pass"] for r in results.values())
     OUT.write_text(
         json.dumps(

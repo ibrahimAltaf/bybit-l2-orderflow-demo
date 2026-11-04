@@ -166,3 +166,8 @@ the four baseline analytical files are byte-identical to v1. Current gates: 192 
 command in `verification_results.json` passed. `provider_cross_check.json` changed
 deliberately: `timestamp_abs_diff_ms` became `timestamp_abs_diff_us` (see
 `docs/TARDIS_TIMESTAMP_RECONCILIATION.md`).
+
+Tag `pre-award-feasibility-v2.1` follows `pre-award-feasibility-v2`. A cold run of the
+START_HERE commands from the extracted ZIP showed that a single-scenario causal check
+overwrote the all-scenario report, so `scripts/verify_causal_replay.py` now merges results.
+No analytical output changed.

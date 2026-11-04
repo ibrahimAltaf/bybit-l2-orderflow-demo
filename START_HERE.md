@@ -6,7 +6,7 @@ below exists in this repository and was executed before delivery. Recorded outpu
 
 **Where the evidence is**
 
-| | Client ZIP (`bybit-l2-feasibility-evidence.zip`) | GitHub repository (`ibrahimAltaf/bybit-l2-orderflow-demo`, tag `pre-award-feasibility-v2`) |
+| | Client ZIP (`bybit-l2-feasibility-evidence.zip`) | GitHub repository (`ibrahimAltaf/bybit-l2-orderflow-demo`, tag `pre-award-feasibility-v2.1`) |
 |---|---|---|
 | Evidence JSON / reports | `evidence/` | `data/evidence/` |
 | Complete replay logs (`demo_events.jsonl`, `signals.csv`) | `evidence/complete/` | Not committed (they contain exchange prices; redistribution terms not verified). Regenerate them with `python scripts/run_demo.py`; their SHA-256 values are in `docs/FINAL_DELIVERY_AUDIT.md` |
@@ -69,7 +69,7 @@ Full list: `docs/LIMITATIONS.md`. Self red-team: `docs/ADVERSARIAL_REVIEW.md`.
 From the extracted ZIP folder, or from a clone:
 
 ```bash
-git clone --branch pre-award-feasibility-v2 https://github.com/ibrahimAltaf/bybit-l2-orderflow-demo.git
+git clone --branch pre-award-feasibility-v2.1 https://github.com/ibrahimAltaf/bybit-l2-orderflow-demo.git
 cd bybit-l2-orderflow-demo          # skip both lines when using the ZIP
 python -m venv .venv                 # Windows: py -3.12 -m venv .venv
 .venv\Scripts\activate               # macOS/Linux: source .venv/bin/activate

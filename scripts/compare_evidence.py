@@ -26,6 +26,7 @@ EXPECTED_TO_DIFFER = {
     "run_info.json",
     "evidence_manifest.json",
     "verification_results.json",
+    "verification_commands.txt",
     "python_test_reconciliation.json",
     "python313_replay_check.json",
     "fresh_environment_smoke.txt",
