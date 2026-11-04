@@ -192,7 +192,7 @@ This repository makes no such claim.
     best bid/ask, `u`, gate-band depth). Volatility, absorption and liquidity-flow
     features are covered by unit tests and future-perturbation tests, not by an
     independent reimplementation.
-19. **Determinism was demonstrated on one machine** (Windows 11, Python 3.12.10, two
+19. **Determinism was demonstrated on one machine** (Windows 11, Python 3.12.10 and 3.13.18, two
     processes). Exact `Decimal` arithmetic and sorted JSON make cross-platform equality
     likely, but it is **NOT VERIFIED**. Float features are rounded to 6 decimals in
     evidence files.

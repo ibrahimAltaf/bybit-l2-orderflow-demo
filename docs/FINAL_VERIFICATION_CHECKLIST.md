@@ -1,6 +1,6 @@
 # Final Verification Checklist
 
-Run 2026-11-02 to 2026-11-04 on Windows 11 with Python 3.12.10, after the adversarial review
+Run 2026-11-02 to 2026-11-04 on Windows 11 with Python 3.12.10 (and 3.13.18 where stated), after the adversarial review
 ([ADVERSARIAL_REVIEW.md](ADVERSARIAL_REVIEW.md)). Every result below comes from a command
 that was actually executed.
 
@@ -28,6 +28,7 @@ that was actually executed.
 | 20 | Determinism, separate processes | **PASS** | `python scripts/verify_determinism.py`: two `cli replay` processes; 4/4 analytical files identical to each other and to the delivered logs (`determinism_verification.json`) |
 | 21 | Verification scripts are typed and linted | **PASS** | covered by `ruff` and strict `mypy` (81 files); they are executed scripts, mostly not unit-tested (coverage counts `src/` only) |
 | 22 | Clock correction | **PASS** | `python scripts/run_full_verification.py`: every command passed, baseline logs unchanged, all 14 scenario logs reproduced identically, independent causal check passes (`verification_results.json`) |
+| 23 | Fresh-environment test of the ZIP | **PASS** | `fresh_environment_smoke.txt`: plain install on 3.12 and 3.13, 188 passed + 4 skipped without raw data, 192 passed with it, `DEMO RESULT: PASS`, regenerated baseline and `best_supported` logs identical to the delivered ones. Run on commit 28c7ca0; the final commit changes only `scripts/compare_evidence.py` and text |
 
 ## Real-data results (identical in both runs)
 

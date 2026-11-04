@@ -10,7 +10,7 @@ runs an auditable WATCH → CANDIDATE → CONFIRMED state machine on top.
 > (TP1 20 % / TP2 20 % / 60 % ATR-Chandelier trail, optional break-even after TP2) is
 > neither implemented nor modified.
 
-## Quick start (fresh machine: Python 3.12, git, internet)
+## Quick start (fresh machine: Python 3.12 or 3.13, git, internet)
 
 ```bash
 git clone https://github.com/ibrahimAltaf/bybit-l2-orderflow-demo.git

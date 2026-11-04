@@ -1,0 +1,43 @@
+Fresh-environment test of the ZIP built from commit 28c7ca0 (Windows 11). Only the
+baseline and best_supported scenarios were regenerated, so causal_replay_summary.json
+differs by design in this partial run.
+
+
+== Python 312 plain install exit 0: Python 3.12.10
+   no raw data: 188 passed, 4 skipped in 24.41s
+   hashes OK: 96 / 96
+
+== Python 313 plain install exit 0: Python 3.13.18
+   no raw data: 188 passed, 4 skipped in 23.43s
+   hashes OK: 96 / 96
+== with raw data, Python 3.12
+   tests: 192 passed in 69.20s (0:01:09)
+DEMO RESULT: PASS
+all datasets pass: True -> data/evidence/l2_integrity_report.json
+Bybit rows 21,347, Tardis rows 21,347; common IDs 21,347; only-in-Bybit 0, only-in-Tardis 
+21,347 pairs; raw max 900 us; floored-to-ms max 0 ms; Tardis = Bybit floored to ms: True; 
+tardis_ORDIUSDT_2026-10-01: 651,959 records; {'CONFIRMED_MISSING': 0, 'SUSPECTED_GAP': 0, 'OBSERVED_NONUNIT_U_INCREMENT'
+cts_baseline                     NON_CAUSAL_B confirmed   7  same 7  changed 0  gone 0  new 0  transitions 6,0
+best_supported                   MODELED      confirmed   7  same 7  changed 0  gone 0  new 0  transitions 6,1
+baseline logs identical to original evidence: True
+best_supported                   transitions 6,105  mismatches 0  pass True
+causal_logs/best_supported/clock_report.json IDENTICAL
+causal_logs/best_supported/continuity_report.json IDENTICAL
+causal_logs/best_supported/demo_events.jsonl IDENTICAL
+causal_logs/best_supported/replay_summary.json IDENTICAL
+causal_logs/best_supported/signals.csv   IDENTICAL
+causal_logs/cts_baseline/continuity_report.json IDENTICAL
+causal_logs/cts_baseline/demo_events.jsonl IDENTICAL
+causal_logs/cts_baseline/replay_summary.json IDENTICAL
+causal_logs/cts_baseline/signals.csv     IDENTICAL
+causal_replay_summary.json               DIFFERENT
+complete/demo_events.jsonl               IDENTICAL
+complete/signals.csv                     IDENTICAL
+continuity_classification.json           IDENTICAL
+continuity_report.json                   IDENTICAL
+data_references.json                     IDENTICAL
+l2_integrity_report.json                 IDENTICAL
+replay_summary.json                      IDENTICAL
+tardis_trade_comparison.json             IDENTICAL
+timestamp_reconciliation.json            IDENTICAL
+SMOKE_DONE

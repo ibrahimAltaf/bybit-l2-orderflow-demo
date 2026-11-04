@@ -66,6 +66,11 @@
       "sha256": "4ac61b0b5cad931422aa9bf922ae189228455e04692f767de73b803577b26dad"
     },
     {
+      "bytes": 2276,
+      "file": "fresh_environment_smoke.txt",
+      "sha256": "66d25628d8711a2b8868dc190cc04d536b0e1cc7ba07e69853e142dcc45d8d24"
+    },
+    {
       "bytes": 750,
       "file": "independent_recompute.json",
       "sha256": "dba2ca40096021f6cd894bce7a39daeaf304a3034d168ad9506f7f230c797dd3"
