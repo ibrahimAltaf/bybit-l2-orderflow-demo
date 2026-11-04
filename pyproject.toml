@@ -7,7 +7,7 @@ name = "bybit-l2-feasibility"
 version = "0.1.0"
 description = "Pre-contract technical feasibility demo: Bybit USDT-perp L2 reconstruction, order flow / CVD and an auditable signal state machine (research only, no profitability claims)."
 readme = "README.md"
-requires-python = ">=3.12,<3.13"
+requires-python = ">=3.12,<3.14"
 dependencies = [
     "httpx>=0.27",
     "pydantic>=2.7",
@@ -56,6 +56,7 @@ ignore = [
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**" = ["PLR2004", "N802"]
+"scripts/build_causal_docs.py" = ["E501", "RUF001"]  # Markdown templates, not code
 
 [tool.mypy]
 python_version = "3.12"

@@ -18,14 +18,19 @@ from bybit_demo.data.verification import make_synchronizer, verify_book
 from bybit_demo.models.events import BookEvent, TradeEvent
 from tests.helpers import ROOT, demo_config, run_events
 
-pytestmark = pytest.mark.real_data
-
 CFG = demo_config()
 PRIMARY = CFG.primary()
 FILES = {f.kind: ROOT / f.local_path for f in dataset_files(PRIMARY, CFG.paths.raw_dir)}
 
-if not all(p.exists() for p in FILES.values()):
-    pytest.skip("real sample not downloaded (run verify-data)", allow_module_level=True)
+# Marked per test, not skipped at import, so these tests are always collected and a
+# run without raw data reports each of them as skipped.
+pytestmark = [
+    pytest.mark.real_data,
+    pytest.mark.skipif(
+        not all(p.exists() for p in FILES.values()),
+        reason="real sample not downloaded (run: python -m bybit_demo.cli verify-data)",
+    ),
+]
 
 
 def _book(limit: int | None = None) -> Iterator[BookEvent]:

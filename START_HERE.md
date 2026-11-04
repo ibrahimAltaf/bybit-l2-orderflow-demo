@@ -37,8 +37,11 @@ In the commands below, "delivered evidence" means `evidence/` in the ZIP or
   are logged with their reasons, features and thresholds.
 * **Reproducibility.** The replay is byte-identical across separate processes and
   across a clean reinstall with a fresh download on the same machine (other machines and
-  operating systems were not tested). No-lookahead was checked by an independent stdlib recomputation and by
-  prefix and future-perturbation replays.
+  operating systems were not tested). An independent stdlib recomputation and prefix and
+  future-perturbation replays show that no later record was used on the replay's own clock.
+* **Clock correction.** The original clock (`cts`) is a labelled non-causal baseline: a book
+  message's `cts` is earlier than its generation time `ts`. Availability-clock replays are
+  in `evidence/causal_logs/`. Start with `docs/CAUSAL_REPLAY_TECHNICAL_RESPONSE.md`.
 
 ## 2. What it does NOT prove
 
@@ -55,9 +58,11 @@ Full list: `docs/LIMITATIONS.md`. Self red-team: `docs/ADVERSARIAL_REVIEW.md`.
 
 ## 3. Requirements
 
-* Python **3.12** (3.12.x), internet for the first run (~70 MB); git only if you clone.
+* Python **3.12 or 3.13**, internet for the first run (~70 MB); git only if you clone.
+  Exact versions used: `requirements-lock.txt`.
 * No account, API key or environment variable.
-* Tested on Windows 11 / Python 3.12.10. Other operating systems were not tested.
+* Tested on Windows 11 with Python 3.12.10 and 3.13.18. Other operating systems were not
+  tested.
 
 ## 4. Install
 
@@ -101,7 +106,13 @@ The exact URLs and hashes are in `evidence/DATA_REFERENCES.md`.
 | 9 | Complete replay (writes the full logs) | `python -m bybit_demo.cli replay` | 6,086 transitions, 7 CONFIRMED |
 | 10 | No-lookahead verification | `python scripts/verify_no_lookahead.py` | recompute 0 mismatches; prefix and perturbed replays identical |
 | 11 | Determinism verification (two separate processes) | `python scripts/verify_determinism.py` | all 4 analytical files identical, and identical to delivered |
-| 12 | Tests, lint, types | `python -m pytest` · `ruff check src tests scripts` · `mypy` | 151 passed · clean · clean |
+| 12 | Tests, lint, types | `python -m pytest -q -rs` · `ruff check src tests scripts` · `mypy` | 192 passed with raw data (188 passed, 4 skipped without) · clean · clean |
+| 12a | All clock scenarios, seven-signal comparison | `python scripts/run_causal_replay.py` | 14 scenarios (about 20 min); baseline logs identical to original evidence |
+| 12b | Independent check of clocked logs (stdlib only) | `python scripts/verify_causal_replay.py --all` | every scenario passes, 0 mismatches |
+| 12c | No-lookahead on the corrected clock | `python scripts/verify_no_lookahead.py --scenario best_supported` | prefix and falsified-future replays identical |
+| 12d | 0.9 ms vs 0 ms | `python scripts/verify_timestamp_reconciliation.py` | raw max 900 µs; floored-to-ms max 0 ms |
+| 12e | Continuity classification | `python scripts/verify_continuity.py` | no confirmed or suspected gaps; no completeness claim |
+| 12f | All of the above, recorded | `python scripts/run_full_verification.py` | writes `verification_results.json` |
 | 13 | Compare your regenerated evidence with the delivered evidence (ZIP folder) | `python scripts/compare_evidence.py --delivered evidence` | every file IDENTICAL except `run_info.json` / `evidence_manifest.json` |
 
 Verify the delivered files themselves: `cd evidence && sha256sum -c evidence_hashes.sha256`.
@@ -117,7 +128,9 @@ On Windows without `sha256sum`, run `certutil -hashfile <file> SHA256` per file.
 | Replay (ORDIUSDT 2026-10-01) | 360,503 events, 350,811 evaluations, 6,086 transitions |
 | CONFIRMED | 7 (1 LONG, 6 SHORT) |
 | REJECTED transitions / rejection flags | 2,666 / 2,787 |
-| Independent recompute | 6,086 transitions × 10 features, 0 mismatches |
+| Independent recompute (`cts` baseline) | 6,086 transitions × 10 features, 0 mismatches |
+| `best_supported` clock (modeled) | 7 of 7 signals, same setups, 6,105 transitions |
+| Tardis.dev recorded receipt (observed, different feed) | 3 confirmed, 2 of 7 surviving; the same feed on its exchange clock gives the same survivors |
 
 **What "0 gaps" means.** Earlier drafts said "zero gaps". Precisely, it means that every
 delta in the three files had `u` = previous `u` + 1.
@@ -150,7 +163,10 @@ See `docs/TECHNICAL_DEMO_REPORT.md` §5 and `docs/ARCHITECTURE.md` (Design decis
 
 ## 10. Known limitations (summary)
 
-* The replay assumes zero latency: it does not model network or processing delay.
+* The cts replay is a non-causal baseline, and a fully observed replay of the ob200 archive
+  cannot be proven from these archives. See `docs/CAUSAL_REPLAY_LIMITATIONS.md`.
+* The original replay assumes zero latency. Corrected-clock delays are modeled, except
+  third-party recorded receipts.
 * Splitting liquidity loss into executions and cancellations is approximate, because of
   100 ms ob200 batching.
 * Open interest, funding and liquidations are not integrated.

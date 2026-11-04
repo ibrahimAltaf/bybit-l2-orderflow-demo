@@ -6,7 +6,9 @@ import asyncio
 from collections.abc import Iterable
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
+
+import yaml
 
 from bybit_demo import __version__
 from bybit_demo.audit.evidence import (
@@ -24,7 +26,15 @@ from bybit_demo.data.validators import ValidationReport
 from bybit_demo.data.verification import iter_book, load_trades, make_synchronizer
 from bybit_demo.detector.engine import DetectorEngine
 from bybit_demo.features.feature_engine import FeatureEngine
-from bybit_demo.models.events import MarketEvent
+from bybit_demo.models.events import BookEvent, MarketEvent, TradeEvent
+from bybit_demo.replay.availability import (
+    ClockMode,
+    ClockScenario,
+    ClockSetup,
+    load_trade_receipts,
+    measure_collector_latency,
+    scenarios_from_config,
+)
 from bybit_demo.replay.clock import ReplayClock
 from bybit_demo.replay.engine import ReplayEngine, ReplaySink, ReplaySummary
 
@@ -32,6 +42,35 @@ TIMESTAMP_RULES = [
     "Source publishes no update IDs: sequence gaps are NOT detectable; only snapshot handling, "
     "timestamp monotonicity and crossed-book checks apply.",
 ]
+
+
+def load_clock_scenarios(
+    cfg: DemoConfig, path: Path = Path("config/causal_scenarios.yaml")
+) -> tuple[list[ClockScenario], dict[str, Any]]:
+    """Clock scenarios, with measured delays resolved from the Tardis.dev sample."""
+    files = _tardis_files(cfg)
+    measured = measure_collector_latency(files[FileKind.BOOK], files[FileKind.TRADES])
+    raw = yaml.safe_load(path.read_text(encoding="utf-8"))["scenarios"]
+    return scenarios_from_config(raw, measured), measured
+
+
+def _tardis_files(cfg: DemoConfig) -> dict[FileKind, Path]:
+    ds = next(d for d in cfg.datasets if d.provider is ProviderId.TARDIS_FREE)
+    return {f.kind: f.local_path for f in dataset_files(ds, cfg.paths.raw_dir)}
+
+
+def build_clock(
+    cfg: DemoConfig, scenario: ClockScenario, measured: dict[str, Any]
+) -> ClockSetup | None:
+    """``None`` for the baseline, so it takes exactly the original code path."""
+    if scenario.mode is ClockMode.CTS_BASELINE:
+        return None
+    receipts = (
+        load_trade_receipts(_tardis_files(cfg)[FileKind.TRADES])
+        if scenario.use_trade_receipts
+        else None
+    )
+    return ClockSetup(scenario, receipts, {"collector_latency": measured})
 
 
 def ensure_downloaded(cfg: DemoConfig, datasets: Iterable[DatasetConfig]) -> list[DownloadRecord]:
@@ -86,10 +125,22 @@ def open_streams(
     return [book, trades], meta
 
 
-def run_replay(cfg: DemoConfig, ds: DatasetConfig, out_dir: Path) -> ReplayResult:
+def run_replay(
+    cfg: DemoConfig, ds: DatasetConfig, out_dir: Path, clock: ClockSetup | None = None
+) -> ReplayResult:
     """Replay ``ds`` and write demo_events.jsonl, signals.csv, continuity_report.json,
-    replay_summary.json into ``out_dir``. Output contains no wall-clock values."""
+    replay_summary.json into ``out_dir``. Output contains no wall-clock values.
+
+    ``clock=None`` is the original cts baseline, byte for byte. Otherwise every
+    event is stamped by the clock scenario before it can reach the replay.
+    """
     streams, meta = open_streams(cfg, ds)
+    if clock is not None:
+        book_stream, trade_stream = streams
+        streams = [
+            clock.stamp_book(cast("Iterable[BookEvent]", book_stream)),
+            clock.stamp_trades(cast("Iterable[TradeEvent]", trade_stream)),
+        ]
     header = {
         "code_version": __version__,
         "dataset_id": ds.id,
@@ -107,6 +158,8 @@ def run_replay(cfg: DemoConfig, ds: DatasetConfig, out_dir: Path) -> ReplayResul
         "data_kind": "REAL historical market data (not synthetic)",
         "disclaimer": "Signal research demonstration only. No profitability claim.",
     }
+    if clock is not None:
+        header["clock"] = clock.provenance()
     out_dir.mkdir(parents=True, exist_ok=True)
     jsonl_path = out_dir / "demo_events.jsonl"
     csv_path = out_dir / "signals.csv"
@@ -135,6 +188,8 @@ def run_replay(cfg: DemoConfig, ds: DatasetConfig, out_dir: Path) -> ReplayResul
         "trades_schema_validation": meta["trades_validation"].to_dict(),
     }
     write_json(summary_path, {"header": header, "summary": summary.deterministic_dict(), **reports})
+    if clock is not None:
+        write_json(out_dir / "clock_report.json", clock.report())
     return ReplayResult(
         summary, memory, engine.sync, [jsonl_path, csv_path, cont_path, summary_path], reports
     )

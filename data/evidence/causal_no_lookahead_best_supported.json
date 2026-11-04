@@ -1,0 +1,25 @@
+{
+  "cut_utc": "2026-10-01T08:00:00Z",
+  "delivered_log": {
+    "transitions_at_or_before_cut": 1880,
+    "transitions_total": 6105
+  },
+  "future_perturbation_replay": {
+    "first_differing_index": null,
+    "identical_to_delivered_log": true,
+    "perturbation": "after cut: trade side flipped and size x1000; book quantities x7",
+    "transitions_at_or_before_cut": 1880
+  },
+  "generator": "scripts/verify_no_lookahead.py",
+  "independent_recompute": {
+    "exit_code": 0,
+    "stdout": "best_supported                   transitions 6,105  mismatches 0  pass True"
+  },
+  "pass": true,
+  "prefix_replay": {
+    "first_differing_index": null,
+    "identical_to_delivered_log": true,
+    "transitions_at_or_before_cut": 1880
+  },
+  "scenario": "best_supported"
+}

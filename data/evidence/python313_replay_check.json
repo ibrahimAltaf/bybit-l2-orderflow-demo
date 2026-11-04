@@ -1,0 +1,30 @@
+{
+  "command": "python -m bybit_demo.cli replay --out <tmp> (Python 3.13.18, Windows)",
+  "installed_with": "pip install --ignore-requires-python -e .[dev]",
+  "files": [
+    {
+      "file": "demo_events.jsonl",
+      "python_3_13_sha256": "c159ea9eaaf321ef4f80ed4dabd95f45a5999b65273a04d602b684d9037b95dd",
+      "evidence_sha256_python_3_12": "c159ea9eaaf321ef4f80ed4dabd95f45a5999b65273a04d602b684d9037b95dd",
+      "identical": true
+    },
+    {
+      "file": "signals.csv",
+      "python_3_13_sha256": "49e01e03f1ddd47122029caf05cab1d6db80a69676f50c6b5cb09c1f10b89c51",
+      "evidence_sha256_python_3_12": "49e01e03f1ddd47122029caf05cab1d6db80a69676f50c6b5cb09c1f10b89c51",
+      "identical": true
+    },
+    {
+      "file": "continuity_report.json",
+      "python_3_13_sha256": "5025d1425239d3347a060e6c900a3873e3ef5f9760215dd6e45bc14c46c4bb07",
+      "evidence_sha256_python_3_12": "5025d1425239d3347a060e6c900a3873e3ef5f9760215dd6e45bc14c46c4bb07",
+      "identical": true
+    },
+    {
+      "file": "replay_summary.json",
+      "python_3_13_sha256": "af93415b3cea318709e057b0a8f02142b92b7ffd049492e5e68b6e03fdeaa801",
+      "evidence_sha256_python_3_12": "af93415b3cea318709e057b0a8f02142b92b7ffd049492e5e68b6e03fdeaa801",
+      "identical": true
+    }
+  ]
+}

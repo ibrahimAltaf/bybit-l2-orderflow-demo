@@ -69,7 +69,7 @@ class FlowWindow:
         self.sell_n = TimeWindowSum(window_us)
 
     def on_trade(self, trade: TradeEvent) -> None:
-        t, n = trade.exchange_ts_us, trade.notional
+        t, n = trade.replay_ts_us, trade.notional
         is_buy = trade.side is Side.BUY
         (self.buy if is_buy else self.sell).add(t, n)
         (self.buy_n if is_buy else self.sell_n).add(t, Decimal(1))

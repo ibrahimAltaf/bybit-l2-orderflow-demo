@@ -2,8 +2,11 @@
 
 Ordering key for every event: ``(time_us, kind_priority, stream_index, position_in_stream)``.
 
-* ``time_us`` -- trade fill time ``T`` and the configured book clock
-  (``cts`` by default: the matching-engine time, i.e. the same clock as ``T``).
+* ``time_us`` -- ``event.replay_ts_us``: the processing-ready time when a clock
+  scenario stamped the event (see :mod:`bybit_demo.replay.availability`), otherwise
+  trade fill time ``T`` and the configured book clock. The unstamped default,
+  ``cts``, is the matching-engine time. It is a NON-CAUSAL BASELINE: a book
+  message stamped ``cts`` was generated later (``ts``) and received later still.
 * ``kind_priority`` -- at an identical microsecond, trades (0) are processed
   before book updates (1). A Bybit book delta stamped ``cts`` already reflects
   fills up to that time, so a fill with ``T == cts`` is processed first and
@@ -51,7 +54,7 @@ def _keyed(
 ) -> Iterator[tuple[OrderKey, MarketEvent]]:
     last = None
     for pos, ev in enumerate(stream):
-        t = ev.exchange_ts_us
+        t = ev.replay_ts_us
         if last is not None and t < last:
             raise ReplayOrderError(
                 f"stream {stream_index} not chronological at position {pos}: {t} < {last}"
@@ -160,7 +163,7 @@ class ReplayEngine:
             if max_events is not None and idx >= max_events:
                 break
             _, ev = nxt
-            t = ev.exchange_ts_us
+            t = ev.replay_ts_us
             if end_us is not None and t > end_us:
                 break
             self.clock.advance(t)
@@ -183,7 +186,7 @@ class ReplayEngine:
             # applied (e.g. all fills of one taker sweep). Only the next event's
             # timestamp is inspected to find the batch end -- never its content.
             nxt = next(merged, None)
-            if nxt is not None and nxt[1].exchange_ts_us == t:
+            if nxt is not None and nxt[1].replay_ts_us == t:
                 continue
             if start_us is not None and t < start_us:
                 continue

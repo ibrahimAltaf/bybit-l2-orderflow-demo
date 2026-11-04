@@ -1,0 +1,111 @@
+# Replay clock scenarios for the causal comparison. Detector thresholds are NOT here:
+# every scenario uses config/demo.yaml unchanged. Delays are milliseconds, or
+# "measured:<group>.<key>" for a value measured from the Tardis.dev local_timestamp
+# fields at run time (see measure_collector_latency).
+#
+# None of the "modeled" delays is calibrated to this bot's own connection. No recorded
+# receipt time for this bot exists for 2026-10-01.
+scenarios:
+  - name: cts_baseline
+    mode: cts_baseline
+    basis: NON_CAUSAL_BASELINE
+    description: Original replay. Book at cts, trades at fill time. Comparison only.
+
+  - name: publication_time
+    mode: publication_time
+    basis: PARTIAL_PUBLICATION_LOWER_BOUND
+    description: >-
+      Book at ts (generation time). Trades at fill time, a lower bound, because the
+      archive has no trade publication field. No transport delay.
+
+  - name: best_supported
+    mode: modeled_availability
+    basis: MODELED
+    use_trade_receipts: true
+    book_transport_ms: measured:book_messages.p50_us
+    description: >-
+      Same ob200 archive as the baseline. Trades at their recorded third-party receive
+      time (joined by trade ID). Book at ts plus the median measured collector delay.
+      Best-supported clock on the archive; still modeled for the book stream.
+
+  - name: best_supported_processing_5ms
+    mode: modeled_availability
+    basis: MODELED
+    use_trade_receipts: true
+    book_transport_ms: measured:book_messages.p50_us
+    processing_ms: 5
+    description: best_supported plus an assumed 5 ms processing delay on both streams.
+
+  - name: collector_p99
+    mode: modeled_availability
+    basis: MODELED
+    book_transport_ms: measured:book_messages.p99_us
+    trade_transport_ms: measured:trades.p99_us
+    description: Both streams delayed by their measured collector p99 (book from ts, trades from T).
+
+  - name: uniform_10ms
+    mode: modeled_availability
+    basis: MODELED
+    book_transport_ms: 10
+    trade_transport_ms: 10
+    description: Assumed 10 ms on both streams (book from ts, trades from T).
+
+  - name: uniform_50ms
+    mode: modeled_availability
+    basis: MODELED
+    book_transport_ms: 50
+    trade_transport_ms: 50
+    description: Assumed 50 ms on both streams.
+
+  - name: uniform_100ms
+    mode: modeled_availability
+    basis: MODELED
+    book_transport_ms: 100
+    trade_transport_ms: 100
+    description: Assumed 100 ms on both streams.
+
+  - name: uniform_250ms
+    mode: modeled_availability
+    basis: MODELED
+    book_transport_ms: 250
+    trade_transport_ms: 250
+    description: Assumed 250 ms on both streams.
+
+  - name: uniform_500ms
+    mode: modeled_availability
+    basis: MODELED
+    book_transport_ms: 500
+    trade_transport_ms: 500
+    description: Assumed 500 ms on both streams.
+
+  - name: book_slow_250ms
+    mode: modeled_availability
+    basis: MODELED
+    book_transport_ms: 250
+    trade_transport_ms: 40
+    description: Asymmetric. Book 250 ms after ts, trades 40 ms after T.
+
+  - name: trade_slow_250ms
+    mode: modeled_availability
+    basis: MODELED
+    book_transport_ms: 40
+    trade_transport_ms: 250
+    description: Asymmetric. Book 40 ms after ts, trades 250 ms after T.
+
+  - name: actual_receipt_tardis
+    mode: actual_receipt
+    basis: OBSERVED_AT_THIRD_PARTY_COLLECTOR
+    dataset: tardis_ORDIUSDT_2026-10-01
+    description: >-
+      Tardis.dev files only. Both streams at recorded local_timestamp, so nothing is
+      modeled, but this is a different feed (50 levels, no update IDs) and a third-party
+      collector, not this bot. Not directly comparable with the ob200 archive.
+
+  - name: tardis_feed_exchange_clock
+    mode: cts_baseline
+    basis: NON_CAUSAL_BASELINE
+    dataset: tardis_ORDIUSDT_2026-10-01
+    description: >-
+      Control. Tardis.dev files on their exchange timestamps, no receipt clock. Comparing
+      this with actual_receipt_tardis isolates the clock; comparing it with cts_baseline
+      isolates the feed (50 levels at 20 ms versus 200 levels at 100 ms).

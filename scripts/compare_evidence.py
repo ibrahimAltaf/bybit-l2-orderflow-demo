@@ -44,7 +44,9 @@ def main() -> int:
     for path in sorted(p for p in delivered.rglob("*") if p.is_file()):
         if path.name in NOT_EVIDENCE:
             continue
-        mine = REGENERATED / path.name
+        rel = path.relative_to(delivered)
+        # complete/ in the package is the top of data/evidence/ in a working tree.
+        mine = REGENERATED / (path.name if rel.parts[0] == "complete" else rel)
         if not mine.exists():
             status = "NOT REGENERATED"
             failures += path.name not in EXPECTED_TO_DIFFER

@@ -59,7 +59,7 @@ optional break-even after TP2) is untouched and out of scope.
 | | `cvd.py` | Session CVD and rolling flow windows (exact `Decimal`). |
 | | `aggressor.py` | Reported side parsing; explicit tick-rule inference (labelled INFERRED). |
 | `features` | `liquidity.py`, `absorption.py`, `volatility.py` | Pure feature functions / trackers. |
-| | `feature_engine.py` | Assembles one `FeatureVector` from causal state. |
+| | `feature_engine.py` | Assembles one `FeatureVector` from state already consumed on the replay clock. |
 | `detector` | `rules.py`, `invalidation.py`, `states.py`, `engine.py` | State machine. |
 | `replay` | `clock.py`, `engine.py` | Deterministic merge and replay. |
 | `audit` | `logger.py`, `evidence.py` | JSONL / CSV sinks, JSON logging, evidence manifest. |
@@ -83,7 +83,9 @@ optional break-even after TP2) is untouched and out of scope.
   * No ordering depends on dict/set iteration, the filesystem or async completion.
   * The detector is evaluated once per distinct timestamp, after every event carrying it.
     LONG is evaluated before SHORT.
-* **No lookahead.**
+* **No lookahead on the replay clock.** This covers record order on the chosen clock. Whether
+  that clock is causal is a separate question: `cts` is not (see
+  `docs/CLOCK_SEMANTICS_AND_ASSUMPTIONS.md`).
   * Parsers are generators, and `heapq.merge` pulls one event at a time.
   * Every rolling window raises on time travel.
   * Features are computed after the current timestamp batch is applied and before any later

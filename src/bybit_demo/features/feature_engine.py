@@ -1,4 +1,4 @@
-"""Point-in-time feature vector assembled from causal state only.
+"""Point-in-time feature vector, from state already consumed on the replay clock.
 
 The engine is fed events one at a time by the replay engine. ``compute(now)``
 reads only accumulators that have already absorbed events with time <= now,

@@ -1,0 +1,212 @@
+{
+  "python": "3.12.10",
+  "platform": "win32",
+  "scenario_logs_identical_to_previous_run": {
+    "actual_receipt_tardis": true,
+    "best_supported": true,
+    "best_supported_processing_5ms": true,
+    "book_slow_250ms": true,
+    "collector_p99": true,
+    "cts_baseline": true,
+    "publication_time": true,
+    "tardis_feed_exchange_clock": true,
+    "trade_slow_250ms": true,
+    "uniform_100ms": true,
+    "uniform_10ms": true,
+    "uniform_250ms": true,
+    "uniform_500ms": true,
+    "uniform_50ms": true
+  },
+  "commands": [
+    {
+      "name": "tests_and_coverage",
+      "command": "python -m pytest --cov --cov-branch -q -p no:cacheprovider",
+      "exit_code": 0,
+      "seconds": 211.7,
+      "output_tail": [
+        "src\\bybit_demo\\flow\\__init__.py                 0      0      0      0   100%",
+        "src\\bybit_demo\\flow\\aggressor.py               24      0      8      0   100%",
+        "src\\bybit_demo\\flow\\cvd.py                     87      1      6      1    98%",
+        "src\\bybit_demo\\flow\\rolling.py                138      7     36      4    94%",
+        "src\\bybit_demo\\models\\__init__.py               0      0      0      0   100%",
+        "src\\bybit_demo\\models\\events.py               102      0      2      0   100%",
+        "src\\bybit_demo\\models\\orderbook.py             62      2      8      2    94%",
+        "src\\bybit_demo\\models\\signals.py               51      0      0      0   100%",
+        "src\\bybit_demo\\pipeline.py                     87     14      8      3    80%",
+        "src\\bybit_demo\\replay\\__init__.py               0      0      0      0   100%",
+        "src\\bybit_demo\\replay\\availability.py         167     12     58      7    91%",
+        "src\\bybit_demo\\replay\\clock.py                 27      1     10      2    92%",
+        "src\\bybit_demo\\replay\\engine.py               156      3     32      4    96%",
+        "-----------------------------------------------------------------------------",
+        "TOTAL                                        3238    212    680     78    92%",
+        "192 passed in 210.31s (0:03:30)"
+      ]
+    },
+    {
+      "name": "ruff",
+      "command": "ruff check src tests scripts",
+      "exit_code": 0,
+      "seconds": 0.0,
+      "output_tail": [
+        "All checks passed!"
+      ]
+    },
+    {
+      "name": "ruff_format",
+      "command": "ruff format --check src tests scripts",
+      "exit_code": 0,
+      "seconds": 0.0,
+      "output_tail": [
+        "81 files already formatted"
+      ]
+    },
+    {
+      "name": "mypy_strict",
+      "command": "mypy",
+      "exit_code": 0,
+      "seconds": 0.8,
+      "output_tail": [
+        "Success: no issues found in 81 source files"
+      ]
+    },
+    {
+      "name": "l2_integrity",
+      "command": "python scripts/verify_l2_integrity.py",
+      "exit_code": 0,
+      "seconds": 54.2,
+      "output_tail": [
+        "bybit_10000LADYSUSDT_2025-06-01: 372,859 records ({'snapshot': 2, 'delta': 372857}), u!=+1: 0, end-of-file snapshot reproduced: True, trades 22,605; all checks pass: True",
+        "bybit_10000LADYSUSDT_2025-10-01: 553,443 records ({'snapshot': 2, 'delta': 553441}), u!=+1: 0, end-of-file snapshot reproduced: True, trades 48,184; all checks pass: True",
+        "bybit_ORDIUSDT_2026-10-01: 339,156 records ({'snapshot': 2, 'delta': 339154}), u!=+1: 0, end-of-file snapshot reproduced: True, trades 21,347; all checks pass: True",
+        "all datasets pass: True -> data/evidence/l2_integrity_report.json"
+      ]
+    },
+    {
+      "name": "tardis_trades",
+      "command": "python scripts/verify_tardis_trades.py",
+      "exit_code": 0,
+      "seconds": 0.6,
+      "output_tail": [
+        "Bybit rows 21,347, Tardis rows 21,347; common IDs 21,347; only-in-Bybit 0, only-in-Tardis 0; field mismatches 0; timestamp |diff| max 900 us -> data/evidence/tardis_trade_comparison.json"
+      ]
+    },
+    {
+      "name": "timestamp_reconciliation",
+      "command": "python scripts/verify_timestamp_reconciliation.py",
+      "exit_code": 0,
+      "seconds": 0.6,
+      "output_tail": [
+        "21,347 pairs; raw max 900 us; floored-to-ms max 0 ms; Tardis = Bybit floored to ms: True; field mismatches 0"
+      ]
+    },
+    {
+      "name": "continuity_classification",
+      "command": "python scripts/verify_continuity.py",
+      "exit_code": 0,
+      "seconds": 104.5,
+      "output_tail": [
+        "bybit_ORDIUSDT_2026-10-01: 339,156 records; {'CONFIRMED_MISSING': 0, 'SUSPECTED_GAP': 0, 'OBSERVED_NONUNIT_U_INCREMENT': 0, 'VALID_RESET_OR_SNAPSHOT_BOUNDARY': 2, 'UNKNOWN_UNVERIFIABLE': 0}",
+        "bybit_10000LADYSUSDT_2025-10-01: 553,443 records; {'CONFIRMED_MISSING': 0, 'SUSPECTED_GAP': 0, 'OBSERVED_NONUNIT_U_INCREMENT': 0, 'VALID_RESET_OR_SNAPSHOT_BOUNDARY': 2, 'UNKNOWN_UNVERIFIABLE': 0}",
+        "bybit_10000LADYSUSDT_2025-06-01: 372,859 records; {'CONFIRMED_MISSING': 0, 'SUSPECTED_GAP': 0, 'OBSERVED_NONUNIT_U_INCREMENT': 0, 'VALID_RESET_OR_SNAPSHOT_BOUNDARY': 2, 'UNKNOWN_UNVERIFIABLE': 0}",
+        "tardis_ORDIUSDT_2026-10-01: 651,959 records; {'CONFIRMED_MISSING': 0, 'SUSPECTED_GAP': 0, 'OBSERVED_NONUNIT_U_INCREMENT': 0, 'VALID_RESET_OR_SNAPSHOT_BOUNDARY': 2, 'UNKNOWN_UNVERIFIABLE': 1}"
+      ]
+    },
+    {
+      "name": "baseline_and_corrected_replays",
+      "command": "python scripts/run_causal_replay.py --workers 5",
+      "exit_code": 0,
+      "seconds": 854.6,
+      "output_tail": [
+        "cts_baseline                     NON_CAUSAL_B confirmed   7  same 7  changed 0  gone 0  new 0  transitions 6,086",
+        "publication_time                 PARTIAL_PUBL confirmed   7  same 7  changed 0  gone 0  new 0  transitions 6,111",
+        "best_supported                   MODELED      confirmed   7  same 7  changed 0  gone 0  new 0  transitions 6,105",
+        "best_supported_processing_5ms    MODELED      confirmed   7  same 7  changed 0  gone 0  new 0  transitions 6,105",
+        "collector_p99                    MODELED      confirmed   7  same 7  changed 0  gone 0  new 0  transitions 6,056",
+        "uniform_10ms                     MODELED      confirmed   7  same 7  changed 0  gone 0  new 0  transitions 6,111",
+        "uniform_50ms                     MODELED      confirmed   7  same 7  changed 0  gone 0  new 0  transitions 6,111",
+        "uniform_100ms                    MODELED      confirmed   7  same 7  changed 0  gone 0  new 0  transitions 6,111",
+        "uniform_250ms                    MODELED      confirmed   7  same 7  changed 0  gone 0  new 0  transitions 6,111",
+        "uniform_500ms                    MODELED      confirmed   7  same 7  changed 0  gone 0  new 0  transitions 6,111",
+        "book_slow_250ms                  MODELED      confirmed  10  same 7  changed 0  gone 0  new 3  transitions 6,125",
+        "trade_slow_250ms                 MODELED      confirmed   6  same 5  changed 0  gone 2  new 1  transitions 5,824",
+        "actual_receipt_tardis            OBSERVED_AT_ confirmed   3  same 2  changed 0  gone 5  new 1  transitions 6,184",
+        "tardis_feed_exchange_clock       NON_CAUSAL_B confirmed   3  same 2  changed 0  gone 5  new 1  transitions 6,193",
+        "baseline logs identical to original evidence: True"
+      ]
+    },
+    {
+      "name": "independent_causal_check",
+      "command": "python scripts/verify_causal_replay.py --all",
+      "exit_code": 0,
+      "seconds": 208.9,
+      "output_tail": [
+        "actual_receipt_tardis            transitions 6,184  mismatches 0  pass True",
+        "best_supported                   transitions 6,105  mismatches 0  pass True",
+        "best_supported_processing_5ms    transitions 6,105  mismatches 0  pass True",
+        "book_slow_250ms                  transitions 6,125  mismatches 0  pass True",
+        "collector_p99                    transitions 6,056  mismatches 0  pass True",
+        "publication_time                 transitions 6,111  mismatches 0  pass True",
+        "trade_slow_250ms                 transitions 5,824  mismatches 0  pass True",
+        "uniform_100ms                    transitions 6,111  mismatches 0  pass True",
+        "uniform_10ms                     transitions 6,111  mismatches 0  pass True",
+        "uniform_250ms                    transitions 6,111  mismatches 0  pass True",
+        "uniform_500ms                    transitions 6,111  mismatches 0  pass True",
+        "uniform_50ms                     transitions 6,111  mismatches 0  pass True"
+      ]
+    },
+    {
+      "name": "no_lookahead_baseline",
+      "command": "python scripts/verify_no_lookahead.py",
+      "exit_code": 0,
+      "seconds": 65.0,
+      "output_tail": [
+        "checked 6086 transitions x 10 features; mismatches: 0; raw-file hashes match evidence header: True",
+        "prefix replay to 2026-10-01T08:00:00Z: 1875 transitions, identical: True; future-perturbed replay: 1875 transitions, identical: True (delivered log has 1875 transitions <= cut) -> PASS=True"
+      ]
+    },
+    {
+      "name": "no_lookahead_best_supported",
+      "command": "python scripts/verify_no_lookahead.py --scenario best_supported",
+      "exit_code": 0,
+      "seconds": 69.1,
+      "output_tail": [
+        "best_supported                   transitions 6,105  mismatches 0  pass True",
+        "prefix replay to 2026-10-01T08:00:00Z: 1880 transitions, identical: True; future-perturbed replay: 1880 transitions, identical: True (delivered log has 1880 transitions <= cut) -> PASS=True"
+      ]
+    },
+    {
+      "name": "determinism",
+      "command": "python scripts/verify_determinism.py",
+      "exit_code": 0,
+      "seconds": 185.9,
+      "output_tail": [
+        "demo_events.jsonl        A==B: True  A==delivered: True  c159ea9eaaf321ef",
+        "signals.csv              A==B: True  A==delivered: True  49e01e03f1ddd471",
+        "continuity_report.json   A==B: True  A==delivered: True  5025d1425239d334",
+        "replay_summary.json      A==B: True  A==delivered: True  af93415b3cea3187",
+        "determinism PASS=True -> data/evidence/determinism_verification.json"
+      ]
+    },
+    {
+      "name": "benchmark",
+      "command": "python scripts/benchmark_replay.py",
+      "exit_code": 0,
+      "seconds": 208.3,
+      "output_tail": [
+        "{",
+        "  \"python\": \"3.12.10\",",
+        "  \"platform\": \"Windows-11-10.0.22000-SP0\",",
+        "  \"processor\": \"Intel64 Family 6 Model 94 Stepping 3, GenuineIntel\",",
+        "  \"cpu_count\": 8,",
+        "  \"events\": 360503,",
+        "  \"evaluations\": 350811,",
+        "  \"wall_time_s\": 207.34,",
+        "  \"events_per_s\": 1739,",
+        "  \"peak_rss_mb\": 79.0,",
+        "  \"profiled\": false",
+        "}"
+      ]
+    }
+  ],
+  "all_passed": true
+}

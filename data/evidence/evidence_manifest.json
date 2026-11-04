@@ -1,6 +1,31 @@
 {
   "files": [
     {
+      "bytes": 5270,
+      "file": "causal_independent_verification.json",
+      "sha256": "76b5aeb168e2bfec69fc0e0bbbe3d4516823164ecb0381f2336e19159791656f"
+    },
+    {
+      "bytes": 766,
+      "file": "causal_no_lookahead_best_supported.json",
+      "sha256": "fb20570ce5443837a4c693891da632626d8bc22dd779ff8b4aa77e48b369ab98"
+    },
+    {
+      "bytes": 16083,
+      "file": "causal_replay_comparison.csv",
+      "sha256": "0489eab6e42e61c3e84c478136b40680d2fd47dd50c0c70167190b27844092c9"
+    },
+    {
+      "bytes": 52680,
+      "file": "causal_replay_summary.json",
+      "sha256": "077191907193515830e092f27af81147a521c51bf6465f5fe5e39ac19ac84da2"
+    },
+    {
+      "bytes": 4707,
+      "file": "continuity_classification.json",
+      "sha256": "440861348cf994786e52f6c7807fb38aa5fa6c3ce8b9b382a6194f24337ba18e"
+    },
+    {
       "bytes": 2750,
       "file": "continuity_report.json",
       "sha256": "5025d1425239d3347a060e6c900a3873e3ef5f9760215dd6e45bc14c46c4bb07"
@@ -51,14 +76,29 @@
       "sha256": "b07fa319fda3fc9ae59b51be424dc9fd935c646a0b5e6c09efc679f3467388b4"
     },
     {
+      "bytes": 4715,
+      "file": "latency_sensitivity.json",
+      "sha256": "f1692c64be6f9da412f39296f49fb4c89cdac01e596b1b252bb0378b9322b2b5"
+    },
+    {
       "bytes": 1091,
       "file": "no_lookahead_verification.json",
       "sha256": "354c3f6067bca0ef055acd73889f23b92e96fcc742032fe7f26a355c7e798059"
     },
     {
-      "bytes": 3769,
+      "bytes": 3775,
       "file": "provider_cross_check.json",
-      "sha256": "bcb71fce783efbe74605e499901a49c978c6693ab4768e8425e6406c54e333f8"
+      "sha256": "38f87965d43e63da2a6390c1c8802bcd264ed6db2baebe8b6c3ef8a2a3336599"
+    },
+    {
+      "bytes": 1269,
+      "file": "python313_replay_check.json",
+      "sha256": "3edae75030f79026e0c26d0003f37d4657b11e77ed3aa7920c68c0a945cfee94"
+    },
+    {
+      "bytes": 4194,
+      "file": "python_test_reconciliation.json",
+      "sha256": "cd1268c57ad89ef39993b10562659262f652484ca401c7463bf0798cc66a2e09"
     },
     {
       "bytes": 3184,
@@ -79,6 +119,21 @@
       "bytes": 1366,
       "file": "tardis_trade_comparison.json",
       "sha256": "6fd238d50bc01fcda3ff9477709f11fe9359a97636abb3f4e917d42e7764abcc"
+    },
+    {
+      "bytes": 2188,
+      "file": "timestamp_reconciliation.json",
+      "sha256": "48782cb34b36304f9ccd51df6b2a9499b38d3ce25e2ad85424b31e5ebd739514"
+    },
+    {
+      "bytes": 561,
+      "file": "verification_commands.txt",
+      "sha256": "a267750e91e9fcb94b30d2de2527d2922e32fe47e7fbfa7a276958cca8d11bc5"
+    },
+    {
+      "bytes": 10733,
+      "file": "verification_results.json",
+      "sha256": "93fef4848cbc4a3b599172e5bb2e31dce9769e120e66dc6e1cbe882e9eef604f"
     }
   ]
 }

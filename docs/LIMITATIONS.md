@@ -90,8 +90,10 @@ Labels:
 14. **Clock choice.**
     * Replay runs on matching-engine time (`cts` and trade time).
     * A live consumer receives book data later: `ts − cts` was up to 399 ms on ORDIUSDT.
-    * Signals are causal on the exchange clock. They do **not** model network or
-      processing latency.
+    * `cts` is earlier than a book message's generation time `ts`, so the original replay
+      is a **non-causal baseline**. Availability-clock replays are in
+      `docs/CAUSAL_REPLAY_TECHNICAL_RESPONSE.md`; their limits are in
+      `docs/CAUSAL_REPLAY_LIMITATIONS.md`. No replay here uses this bot's own receipt times.
 15. **Tardis.dev CSV has no update IDs (VERIFIED).**
     * Gaps are undetectable from that source.
     * Top of book agreed with the Bybit archive at 96.1 % of minute marks. The cause of the

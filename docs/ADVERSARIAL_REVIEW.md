@@ -41,6 +41,7 @@ Severity:
 | 24 | Info | Redistribution of derived evidence (top-of-book prices) | Bybit / Tardis.dev terms not reviewed | Raw data is git-ignored. The two large evidence logs are flagged | Licensing NOT VERIFIED |
 | 25 | Info | `scripts/run_demo.py` imports the synthetic fixtures from `tests/` | `run_demo.py` | Disclosed (LIMITATIONS §23) | Deleting `tests/` breaks the demo script |
 | 26 | Medium | Found while preparing the git commit: JSON evidence files were written with platform line endings (CRLF on Windows), while git stores LF. The SHA-256 values in `evidence_manifest.json` and `determinism_check.json` would not have matched a clone on another OS | `git add` CRLF warnings on `data/evidence/*.json` | All evidence writers now force LF (`newline="\n"`). `.gitattributes` pins LF text and binary archives. Evidence was regenerated. Test: `test_evidence_files_use_lf_on_every_platform` | Cross-platform byte equality of the replay itself is still NOT VERIFIED (#21) |
+| 27 | High (claim) | Found by the client: the replay ordered book records by `cts`, earlier than the message's generation time `ts`, so "no lookahead" held only on that clock | `causal_replay_summary.json` (`baseline_exposure`) | `cts` replay relabelled a non-causal baseline; availability clocks added; all claims qualified | No record of this bot's own receipt times exists, so a fully observed replay of the ob200 archive is impossible |
 
 ## Checks performed that found no defect
 
@@ -80,5 +81,6 @@ Severity:
 
 The limited feasibility claims are supported by code and evidence files: data
 availability, reconstruction, continuity on the verified files, trade-side
-interpretation, deterministic and causal replay, and auditable state transitions.
+interpretation, deterministic replay, and auditable state transitions. Item 27 corrects the
+earlier causality statement.
 Everything beyond that is labelled PLANNED or NOT VERIFIED in LIMITATIONS.md.

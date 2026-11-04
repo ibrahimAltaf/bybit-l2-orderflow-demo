@@ -464,7 +464,7 @@ def cross_check(
         for k in common
         if (ia[k].price, ia[k].quantity, ia[k].side) != (ib[k].price, ib[k].quantity, ib[k].side)
     )
-    ts_diff_ms = [abs(ia[k].exchange_ts_us - ib[k].exchange_ts_us) // 1000 for k in common]
+    ts_diff_us = [abs(ia[k].exchange_ts_us - ib[k].exchange_ts_us) for k in common]
 
     # Tardis book timestamps are the exchange message time ``ts``, so the Bybit
     # side is replayed on its ``ts`` clock here for a like-for-like comparison.
@@ -503,7 +503,8 @@ def cross_check(
             f"only_in_{a.id}": len(ia.keys() - ib.keys()),
             f"only_in_{b.id}": len(ib.keys() - ia.keys()),
             "common_ids_with_price_qty_or_side_mismatch": field_mismatch,
-            "timestamp_abs_diff_ms": _percentiles(ts_diff_ms, (0.5, 0.99)),
+            # Exact microseconds. Flooring to ms here once displayed a 0-0.9 ms difference as 0.
+            "timestamp_abs_diff_us": _percentiles(ts_diff_us, (0.5, 0.99)),
         },
         "top_of_book": {
             "sample_interval_s": interval_s,

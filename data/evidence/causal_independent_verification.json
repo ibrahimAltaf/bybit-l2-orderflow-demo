@@ -1,0 +1,210 @@
+{
+  "generator": "scripts/verify_causal_replay.py (stdlib only)",
+  "pass": true,
+  "scenarios": {
+    "actual_receipt_tardis": {
+      "features_per_transition": 9,
+      "fifo_adjustments_recomputed": [
+        0,
+        0
+      ],
+      "fifo_adjustments_reported_by_replay": [
+        0,
+        0
+      ],
+      "first_mismatches": [],
+      "mismatching_transitions": 0,
+      "pass": true,
+      "raw_file_hashes_match_log_header": true,
+      "records_ready_before_they_happened": 0,
+      "transitions_checked": 6184
+    },
+    "best_supported": {
+      "features_per_transition": 10,
+      "fifo_adjustments_recomputed": [
+        0,
+        0
+      ],
+      "fifo_adjustments_reported_by_replay": [
+        0,
+        0
+      ],
+      "first_mismatches": [],
+      "mismatching_transitions": 0,
+      "pass": true,
+      "raw_file_hashes_match_log_header": true,
+      "records_ready_before_they_happened": 0,
+      "transitions_checked": 6105
+    },
+    "best_supported_processing_5ms": {
+      "features_per_transition": 10,
+      "fifo_adjustments_recomputed": [
+        0,
+        0
+      ],
+      "fifo_adjustments_reported_by_replay": [
+        0,
+        0
+      ],
+      "first_mismatches": [],
+      "mismatching_transitions": 0,
+      "pass": true,
+      "raw_file_hashes_match_log_header": true,
+      "records_ready_before_they_happened": 0,
+      "transitions_checked": 6105
+    },
+    "book_slow_250ms": {
+      "features_per_transition": 10,
+      "fifo_adjustments_recomputed": [
+        0,
+        0
+      ],
+      "fifo_adjustments_reported_by_replay": [
+        0,
+        0
+      ],
+      "first_mismatches": [],
+      "mismatching_transitions": 0,
+      "pass": true,
+      "raw_file_hashes_match_log_header": true,
+      "records_ready_before_they_happened": 0,
+      "transitions_checked": 6125
+    },
+    "collector_p99": {
+      "features_per_transition": 10,
+      "fifo_adjustments_recomputed": [
+        0,
+        0
+      ],
+      "fifo_adjustments_reported_by_replay": [
+        0,
+        0
+      ],
+      "first_mismatches": [],
+      "mismatching_transitions": 0,
+      "pass": true,
+      "raw_file_hashes_match_log_header": true,
+      "records_ready_before_they_happened": 0,
+      "transitions_checked": 6056
+    },
+    "publication_time": {
+      "features_per_transition": 10,
+      "fifo_adjustments_recomputed": [
+        0,
+        0
+      ],
+      "fifo_adjustments_reported_by_replay": [
+        0,
+        0
+      ],
+      "first_mismatches": [],
+      "mismatching_transitions": 0,
+      "pass": true,
+      "raw_file_hashes_match_log_header": true,
+      "records_ready_before_they_happened": 0,
+      "transitions_checked": 6111
+    },
+    "trade_slow_250ms": {
+      "features_per_transition": 10,
+      "fifo_adjustments_recomputed": [
+        0,
+        0
+      ],
+      "fifo_adjustments_reported_by_replay": [
+        0,
+        0
+      ],
+      "first_mismatches": [],
+      "mismatching_transitions": 0,
+      "pass": true,
+      "raw_file_hashes_match_log_header": true,
+      "records_ready_before_they_happened": 0,
+      "transitions_checked": 5824
+    },
+    "uniform_100ms": {
+      "features_per_transition": 10,
+      "fifo_adjustments_recomputed": [
+        0,
+        0
+      ],
+      "fifo_adjustments_reported_by_replay": [
+        0,
+        0
+      ],
+      "first_mismatches": [],
+      "mismatching_transitions": 0,
+      "pass": true,
+      "raw_file_hashes_match_log_header": true,
+      "records_ready_before_they_happened": 0,
+      "transitions_checked": 6111
+    },
+    "uniform_10ms": {
+      "features_per_transition": 10,
+      "fifo_adjustments_recomputed": [
+        0,
+        0
+      ],
+      "fifo_adjustments_reported_by_replay": [
+        0,
+        0
+      ],
+      "first_mismatches": [],
+      "mismatching_transitions": 0,
+      "pass": true,
+      "raw_file_hashes_match_log_header": true,
+      "records_ready_before_they_happened": 0,
+      "transitions_checked": 6111
+    },
+    "uniform_250ms": {
+      "features_per_transition": 10,
+      "fifo_adjustments_recomputed": [
+        0,
+        0
+      ],
+      "fifo_adjustments_reported_by_replay": [
+        0,
+        0
+      ],
+      "first_mismatches": [],
+      "mismatching_transitions": 0,
+      "pass": true,
+      "raw_file_hashes_match_log_header": true,
+      "records_ready_before_they_happened": 0,
+      "transitions_checked": 6111
+    },
+    "uniform_500ms": {
+      "features_per_transition": 10,
+      "fifo_adjustments_recomputed": [
+        0,
+        0
+      ],
+      "fifo_adjustments_reported_by_replay": [
+        0,
+        0
+      ],
+      "first_mismatches": [],
+      "mismatching_transitions": 0,
+      "pass": true,
+      "raw_file_hashes_match_log_header": true,
+      "records_ready_before_they_happened": 0,
+      "transitions_checked": 6111
+    },
+    "uniform_50ms": {
+      "features_per_transition": 10,
+      "fifo_adjustments_recomputed": [
+        0,
+        0
+      ],
+      "fifo_adjustments_reported_by_replay": [
+        0,
+        0
+      ],
+      "first_mismatches": [],
+      "mismatching_transitions": 0,
+      "pass": true,
+      "raw_file_hashes_match_log_header": true,
+      "records_ready_before_they_happened": 0,
+      "transitions_checked": 6111
+    }
+  }
+}

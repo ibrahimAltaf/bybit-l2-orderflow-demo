@@ -49,6 +49,9 @@ engine is not touched. **It does not claim historical profitability.**
   * 6,086 logged transitions, each with timestamp, update ID, the full feature vector and
     the thresholds applied;
   * 7 naturally occurring CONFIRMED transitions (1 LONG, 6 SHORT).
+* **Clock correction:** this replay ordered book records by `cts`, earlier than the message's
+  generation time, so it is a labelled non-causal baseline. See
+  `docs/CAUSAL_REPLAY_TECHNICAL_RESPONSE.md`.
 * **Reproducibility checks:**
   * Two independent processes produced byte-identical output, on one Windows machine.
   * A separate stdlib-only script does not import this package. It rebuilt flow and book
@@ -69,6 +72,7 @@ engine is not touched. **It does not claim historical profitability.**
 | Liquidity, absorption, volatility features | IMPLEMENTED FOR FEASIBILITY DEMO | Unit tests; computed on real data, not independently recomputed |
 | LONG / SHORT state machine with rejection audit | IMPLEMENTED FOR FEASIBILITY DEMO; run on 1 real day | `demo_events.jsonl`, `signals.csv`, `test_detector.py` |
 | Deterministic replay | VERIFIED ON REAL DATA (one machine) | `determinism_check.json` |
+| Availability-clock replay | IMPLEMENTED; modeled on the archive, observed only at a third-party collector on another feed | `causal_replay_summary.json` |
 | Second provider cross-check (Tardis.dev free day) | VERIFIED ON REAL DATA (one day) | `provider_cross_check.json` |
 | Multi-symbol / multi-day coverage scan | PLANNED FOR AWARDED PROJECT | — |
 | Live WebSocket ingestion and resync | PLANNED FOR AWARDED PROJECT | — |

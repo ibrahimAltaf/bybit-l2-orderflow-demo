@@ -1,14 +1,14 @@
 # Final Verification Checklist
 
-Run 2026-11-02 and 2026-11-03 on Windows 11 with Python 3.12.10, after the adversarial review
+Run 2026-11-02 to 2026-11-04 on Windows 11 with Python 3.12.10, after the adversarial review
 ([ADVERSARIAL_REVIEW.md](ADVERSARIAL_REVIEW.md)). Every result below comes from a command
 that was actually executed.
 
 | # | Gate | Result | Evidence / command |
 |---|---|---|---|
-| 1 | Lint and format | **PASS** | `ruff check src tests scripts`: "All checks passed!". `ruff format --check`: 68 files already formatted |
-| 2 | Strict type checking | **PASS** | `mypy` (strict, pydantic plugin; covers `src/`, `tests/` and `scripts/`): "no issues found in 68 source files" |
-| 3 | Full test suite | **PASS** | `python -m pytest`: **151 passed**, including 4 real-data tests and 29 adversarial tests |
+| 1 | Lint and format | **PASS** | `ruff check src tests scripts`: "All checks passed!". `ruff format --check`: 81 files already formatted |
+| 2 | Strict type checking | **PASS** | `mypy` (strict, pydantic plugin; covers `src/`, `tests/` and `scripts/`): "no issues found in 81 source files" |
+| 3 | Full test suite | **PASS** | `python -m pytest`: **192 passed**, including 4 real-data tests (188 passed, 4 skipped without raw data). The v1 ZIP had 151 |
 | 4 | Coverage | **92 %** (branch-aware) | `python -m pytest --cov --cov-branch`. Lowest: `data/verification.py` 63 % (its cross-provider path runs in `verify-data` on real data, not in unit tests) and `cli.py` 69 % |
 | 5 | Clean-machine reproduction | **PASS** | Copied exactly the files git would commit (no raw data, caches or venv) into a new directory. Then: fresh `py -3.12 -m venv`, `pip install -e ".[dev]"`, offline tests (146 passed, real-data module skipped), `python scripts/run_demo.py` with **all 8 raw files downloaded cold**: `DEMO RESULT: PASS` in 10 min 31 s. Every downloaded file's SHA-256 equalled the recorded manifest |
 | 6 | Demo run twice, evidence compared | **PASS** | Run 1 was the clean clone; run 2 was the working repository (cached data), `DEMO RESULT: PASS` in 12 min 12 s. 9 of 10 evidence files byte-identical: `demo_events.jsonl`, `signals.csv`, `continuity_report.json`, `replay_summary.json`, `dataset_verification.json`, `provider_cross_check.json`, `independent_recompute.json`, `determinism_check.json`, `download_manifest.json`. Only `run_info.json` (wall-clock times, by design) differs |
@@ -26,7 +26,8 @@ that was actually executed.
 | 18 | Tardis.dev trade comparison (independent stdlib code) | **PASS** | `python scripts/verify_tardis_trades.py`: 21,347 common IDs, 0 only-in-either, 0 field mismatches, timestamp diff <= 0.9 ms (`tardis_trade_comparison.json`) |
 | 19 | No-lookahead on real data | **PASS** | `python scripts/verify_no_lookahead.py`: independent recompute 0 mismatches; prefix replay and future-perturbed replay both reproduce all 1,875 transitions up to 08:00 UTC byte-identically (`no_lookahead_verification.json`) |
 | 20 | Determinism, separate processes | **PASS** | `python scripts/verify_determinism.py`: two `cli replay` processes; 4/4 analytical files identical to each other and to the delivered logs (`determinism_verification.json`) |
-| 21 | New verification scripts are themselves typed and linted | **PASS** | covered by `ruff` and strict `mypy` (68 files); they are executed scripts, not unit-tested (coverage counts `src/` only) |
+| 21 | Verification scripts are typed and linted | **PASS** | covered by `ruff` and strict `mypy` (81 files); they are executed scripts, mostly not unit-tested (coverage counts `src/` only) |
+| 22 | Clock correction | **PASS** | `python scripts/run_full_verification.py`: every command passed, baseline logs unchanged, all 14 scenario logs reproduced identically, independent causal check passes (`verification_results.json`) |
 
 ## Real-data results (identical in both runs)
 

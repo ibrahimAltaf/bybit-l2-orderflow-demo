@@ -15,7 +15,7 @@ runs an auditable WATCH → CANDIDATE → CONFIRMED state machine on top.
 ```bash
 git clone https://github.com/ibrahimAltaf/bybit-l2-orderflow-demo.git
 cd bybit-l2-orderflow-demo
-python -m venv .venv               # use a Python 3.12 interpreter (e.g. `py -3.12` on Windows)
+python -m venv .venv               # Python 3.12 or 3.13 (e.g. `py -3.12` on Windows)
 .venv\Scripts\activate             # macOS/Linux: source .venv/bin/activate
 pip install -e ".[dev]"
 python scripts/run_demo.py
@@ -58,7 +58,10 @@ files it writes to `data/evidence/`.
   carries its timestamp, update ID, all features and all thresholds.
 * **Reproducibility.** Two processes produced byte-identical output files. A
   stdlib-only script that does not import this package recomputed 10 logged features for
-  all 6,086 transitions from the raw files: 0 mismatches.
+  all 6,086 transitions from the raw files: 0 mismatches. This shows no later record was
+  used on the `cts` clock, not that the data was available then (see the correction below).
+
+**Correction.** The original replay orders book records by `cts`, which is earlier than the message's generation time `ts`. Its no-lookahead checks show that no later *record* was used on that clock; they do not show the data was available at those times. `cts` replay is kept as a labelled non-causal baseline. See [docs/CAUSAL_REPLAY_TECHNICAL_RESPONSE.md](docs/CAUSAL_REPLAY_TECHNICAL_RESPONSE.md).
 
 ## What it does NOT show
 
@@ -87,6 +90,10 @@ python scripts/verify_l2_integrity.py                # raw snapshot/delta integr
 python scripts/verify_tardis_trades.py               # Bybit vs Tardis.dev trade comparison (stdlib only)
 python scripts/verify_no_lookahead.py                # recompute + prefix + future-perturbation replays
 python scripts/verify_determinism.py                 # two separate replay processes vs delivered logs
+python scripts/run_causal_replay.py                  # every clock scenario + seven-signal comparison
+python scripts/verify_causal_replay.py --all         # stdlib check of availability-clock logs
+python scripts/verify_timestamp_reconciliation.py    # the 0.9 ms vs 0 ms statements
+python scripts/verify_continuity.py                  # source-aware continuity classification
 python scripts/build_evidence_package.py             # client evidence package + ZIP (clean tree)
 python scripts/benchmark_replay.py                   # runtime / throughput / peak memory
 ```
@@ -143,6 +150,9 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 |---|---|
 | [docs/Client_Guide.pdf](docs/Client_Guide.pdf) | Illustrated client guide: installation, running the demo, results |
 | [START_HERE.md](START_HERE.md) | Single entry point for independent verification |
+| [docs/CAUSAL_REPLAY_TECHNICAL_RESPONSE.md](docs/CAUSAL_REPLAY_TECHNICAL_RESPONSE.md) | Clock correction and seven-signal comparison |
+| [docs/CLOCK_SEMANTICS_AND_ASSUMPTIONS.md](docs/CLOCK_SEMANTICS_AND_ASSUMPTIONS.md) | Timestamp fields, clock modes, assumptions |
+| [docs/ORDERBOOK_CONTINUITY_METHODOLOGY.md](docs/ORDERBOOK_CONTINUITY_METHODOLOGY.md) | Continuity classes and results |
 | [docs/CLIENT_SUMMARY.md](docs/CLIENT_SUMMARY.md) | One-page summary and component status matrix |
 | [docs/DATA_FEASIBILITY_REPORT.md](docs/DATA_FEASIBILITY_REPORT.md) | Providers, URLs, files, hashes, sequence semantics, cost |
 | [docs/TECHNICAL_DEMO_REPORT.md](docs/TECHNICAL_DEMO_REPORT.md) | Components, results, audit chains, rejections, change log, performance |

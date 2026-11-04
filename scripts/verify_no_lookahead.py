@@ -1,6 +1,11 @@
 """No-lookahead verification on the real ORDIUSDT 2026-10-01 replay.
 
     python scripts/verify_no_lookahead.py [--cut 2026-10-01T08:00:00Z]
+    python scripts/verify_no_lookahead.py --scenario best_supported
+
+With --scenario the checks run on that clock against its log in
+data/evidence/causal_logs/, "after CUT" means after an event's ready time, and the
+independent check is scripts/verify_causal_replay.py.
 
 Three independent lines of evidence, all compared against the delivered audit
 log data/evidence/demo_events.jsonl (run ``python scripts/run_demo.py`` first):
@@ -35,7 +40,7 @@ from collections.abc import Iterable, Iterator
 from concurrent.futures import ProcessPoolExecutor
 from dataclasses import replace
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 ROOT = Path(__file__).resolve().parents[1]
 os.chdir(ROOT)
@@ -44,6 +49,7 @@ from bybit_demo.audit.logger import MemorySink  # noqa: E402
 from bybit_demo.config import load_config  # noqa: E402
 from bybit_demo.models.events import (  # noqa: E402
     BookDelta,
+    BookEvent,
     BookSnapshot,
     MarketEvent,
     PriceLevel,
@@ -52,7 +58,12 @@ from bybit_demo.models.events import (  # noqa: E402
     iso_to_us,
     us_to_iso,
 )
-from bybit_demo.pipeline import build_engine, open_streams  # noqa: E402
+from bybit_demo.pipeline import (  # noqa: E402
+    build_clock,
+    build_engine,
+    load_clock_scenarios,
+    open_streams,
+)
 
 LOG = ROOT / "data/evidence/demo_events.jsonl"
 OUT = ROOT / "data/evidence/no_lookahead_verification.json"
@@ -60,7 +71,7 @@ OUT = ROOT / "data/evidence/no_lookahead_verification.json"
 
 def _falsify(stream: Iterable[MarketEvent], cut_us: int) -> Iterator[MarketEvent]:
     for ev in stream:
-        if ev.exchange_ts_us <= cut_us:
+        if ev.replay_ts_us <= cut_us:
             yield ev
         elif isinstance(ev, TradeEvent):
             flipped = Side.SELL if ev.side is Side.BUY else Side.BUY
@@ -79,12 +90,22 @@ def _falsify(stream: Iterable[MarketEvent], cut_us: int) -> Iterator[MarketEvent
             )
 
 
-def _replay(mode: str, cut: str) -> list[str]:
+def _replay(mode: str, cut: str, scenario: str | None) -> list[str]:
     """Return canonical JSON of every transition with ts <= cut."""
     cfg = load_config(Path("config/demo.yaml"))
     ds = cfg.primary()
     cut_us = iso_to_us(cut)
     streams, _ = open_streams(cfg, ds)
+    if scenario is not None:
+        scenarios, measured = load_clock_scenarios(cfg)
+        s = next(x for x in scenarios if x.name == scenario)
+        clock = build_clock(cfg, s, measured)
+        assert clock is not None
+        book_stream, trade_stream = streams
+        streams = [
+            clock.stamp_book(cast("Iterable[BookEvent]", book_stream)),
+            clock.stamp_trades(cast("Iterable[TradeEvent]", trade_stream)),
+        ]
     end = cut
     if mode == "perturbed":
         # Run 10 minutes past the cut so the falsified events are really consumed.
@@ -102,14 +123,21 @@ def _canon(d: dict[str, Any]) -> str:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--cut", default="2026-10-01T08:00:00Z", help="UTC cut time (ISO-8601, Z)")
+    ap.add_argument("--scenario", help="clock scenario; default: the cts baseline log")
     args = ap.parse_args()
     cut_us = iso_to_us(args.cut)
-    if not LOG.exists():
-        print(f"{LOG} missing: run python scripts/run_demo.py first")
+    log = (
+        ROOT / f"data/evidence/causal_logs/{args.scenario}/demo_events.jsonl"
+        if args.scenario
+        else LOG
+    )
+    out = ROOT / f"data/evidence/causal_no_lookahead_{args.scenario}.json" if args.scenario else OUT
+    if not log.exists():
+        print(f"{log} missing: run the replay first")
         return 2
     delivered: list[str] = []
     total = 0
-    with LOG.open(encoding="utf-8") as fh:
+    with log.open(encoding="utf-8") as fh:
         for line in fh:
             rec = json.loads(line)
             if rec.get("record_type") == "state_transition":
@@ -117,15 +145,17 @@ def main() -> int:
                 if rec["ts_us"] <= cut_us:
                     delivered.append(_canon(rec))
 
+    independent = (
+        ["scripts/verify_causal_replay.py", args.scenario]
+        if args.scenario
+        else ["scripts/independent_recompute.py"]
+    )
     proc = subprocess.run(
-        [sys.executable, "-I", "scripts/independent_recompute.py"],
-        capture_output=True,
-        text=True,
-        check=False,
+        [sys.executable, "-I", *independent], capture_output=True, text=True, check=False
     )
     with ProcessPoolExecutor(max_workers=2) as pool:
-        prefix_f = pool.submit(_replay, "prefix", args.cut)
-        perturbed_f = pool.submit(_replay, "perturbed", args.cut)
+        prefix_f = pool.submit(_replay, "prefix", args.cut, args.scenario)
+        perturbed_f = pool.submit(_replay, "perturbed", args.cut, args.scenario)
         prefix, perturbed = prefix_f.result(), perturbed_f.result()
 
     def compare(got: list[str]) -> dict[str, Any]:
@@ -138,21 +168,29 @@ def main() -> int:
             "first_differing_index": first,
         }
 
-    recompute = json.loads((ROOT / "data/evidence/independent_recompute.json").read_text("utf-8"))
-    result = {
+    recompute = (
+        None
+        if args.scenario
+        else json.loads((ROOT / "data/evidence/independent_recompute.json").read_text("utf-8"))
+    )
+    result: dict[str, Any] = {
         "generator": "scripts/verify_no_lookahead.py",
         "cut_utc": args.cut,
         "delivered_log": {
             "transitions_total": total,
             "transitions_at_or_before_cut": len(delivered),
         },
-        "independent_recompute": {
-            "exit_code": proc.returncode,
-            "stdout": proc.stdout.strip(),
-            "transitions_checked": recompute["transitions_checked"],
-            "features_checked_per_transition": recompute["features_checked_per_transition"],
-            "mismatching_transitions": recompute["mismatching_transitions"],
-        },
+        "independent_recompute": (
+            {"exit_code": proc.returncode, "stdout": proc.stdout.strip()}
+            if recompute is None
+            else {
+                "exit_code": proc.returncode,
+                "stdout": proc.stdout.strip(),
+                "transitions_checked": recompute["transitions_checked"],
+                "features_checked_per_transition": recompute["features_checked_per_transition"],
+                "mismatching_transitions": recompute["mismatching_transitions"],
+            }
+        ),
         "prefix_replay": compare(prefix),
         "future_perturbation_replay": {
             **compare(perturbed),
@@ -166,7 +204,9 @@ def main() -> int:
         and len(delivered) > 0
     )
     result["pass"] = ok
-    OUT.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", "utf-8", newline="\n")
+    if args.scenario:
+        result["scenario"] = args.scenario
+    out.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", "utf-8", newline="\n")
     print(proc.stdout.strip())
     print(
         f"prefix replay to {args.cut}: {len(prefix)} transitions, identical: "

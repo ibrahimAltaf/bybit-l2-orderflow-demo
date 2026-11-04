@@ -37,3 +37,15 @@ class CorruptFileError(BybitDemoError):
 
 class IntegrityError(BybitDemoError):
     """A file's SHA-256 differs from the hash recorded for the same URL in the manifest."""
+
+
+class ClockError(BybitDemoError):
+    """A replay clock cannot be applied honestly to the given events."""
+
+
+class MissingTimestampError(ClockError):
+    """A clock needs a timestamp the source does not contain; it is never fabricated."""
+
+
+class NegativeLatencyError(ClockError):
+    """An event would become available before it happened, or a delay is negative."""

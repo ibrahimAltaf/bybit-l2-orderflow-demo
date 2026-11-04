@@ -1,0 +1,55 @@
+{
+  "bybit": {
+    "decimal_places_histogram": {
+      "0": 2,
+      "1": 30,
+      "2": 276,
+      "3": 1942,
+      "4": 19097
+    },
+    "field": "timestamp, Unix seconds as decimal text",
+    "sha256": "a59e3cd00ff8950fe492685dd33bd200bbdbdb668bd173cadf13c64069deec70",
+    "url": "https://public.bybit.com/trading/ORDIUSDT/ORDIUSDT2026-10-01.csv.gz"
+  },
+  "explanation": {
+    "0 ms": "The earlier provider_cross_check.json field timestamp_abs_diff_ms was computed as abs(diff_us) // 1000, which floors 0-900 us to 0. It was a truncated display, not an exact difference. The field is now timestamp_abs_diff_us.",
+    "0.9 ms": "Exact maximum of |Bybit - Tardis| in integer microseconds, reported by scripts/verify_tardis_trades.py. Correct.",
+    "cause_of_the_nonzero_difference": "Tardis values are whole milliseconds and Bybit CSV values carry 0.1 ms precision. Flooring both to ms makes every pair equal, so the observed difference is precision, not a disagreement about the trade."
+  },
+  "generator": "scripts/verify_timestamp_reconciliation.py (stdlib only)",
+  "join": "exact trade ID",
+  "normalization": {
+    "price_size": "Decimal, so 4.620 == 4.62",
+    "price_size_side_mismatches": 0,
+    "price_text_differs_but_compared_numerically": 2787,
+    "side": "Bybit Buy/Sell lower-cased, then equal to Tardis buy/sell",
+    "size_text_differs_but_compared_numerically": 0
+  },
+  "tardis": {
+    "field": "timestamp, integer microseconds",
+    "sha256": "80ba6285673a8a70bd365dbfbea9d68b8c3713a258be35e38b8c6c493baa0908",
+    "url": "https://datasets.tardis.dev/v1/bybit/trades/2026/10/01/ORDIUSDT.csv.gz",
+    "values_not_a_whole_millisecond": 0
+  },
+  "timestamps": {
+    "every_tardis_value_is_bybit_floored_to_ms": true,
+    "floored_ms_max_abs_diff_ms": 0,
+    "pairs": 21347,
+    "pairs_differing_after_flooring_both_to_ms": 0,
+    "raw_max_abs_diff_us": 900,
+    "raw_max_signed_diff_us": 900,
+    "raw_min_signed_diff_us": 0,
+    "raw_signed_diff_us_distribution": {
+      "0": 2250,
+      "100": 2041,
+      "200": 2008,
+      "300": 2330,
+      "400": 2408,
+      "500": 2033,
+      "600": 1923,
+      "700": 2037,
+      "800": 2228,
+      "900": 2089
+    }
+  }
+}

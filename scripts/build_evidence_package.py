@@ -67,6 +67,7 @@ def main() -> int:
     for f in sorted(SRC_EVIDENCE.iterdir()):
         if f.is_file():
             shutil.copy2(f, ev / ("complete" if f.name in COMPLETE else "") / f.name)
+    shutil.copytree(SRC_EVIDENCE / "causal_logs", ev / "causal_logs")
     lines = [
         f"{sha256(p)}  {p.relative_to(ev).as_posix()}"
         for p in sorted(ev.rglob("*"))

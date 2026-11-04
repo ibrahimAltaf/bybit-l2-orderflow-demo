@@ -82,8 +82,15 @@ class TradeEvent:
     local_ts_us: int | None = None  # capture time, when the provider records one
     provider: str = ""
     raw: Mapping[str, str] = field(default=_EMPTY, compare=False)
+    available_ts_us: int | None = None  # when a consumer could first have this event
+    ready_ts_us: int | None = None  # when the detector may consume it (see replay/availability)
 
     kind: EventKind = field(default=EventKind.TRADE, init=False)
+
+    @property
+    def replay_ts_us(self) -> int:
+        """The time the replay consumes this event at (matching time unless a clock stamped it)."""
+        return self.exchange_ts_us if self.ready_ts_us is None else self.ready_ts_us
 
     @property
     def notional(self) -> Decimal:
@@ -115,8 +122,14 @@ class BookSnapshot:
     depth: int | None = None
     provider: str = ""
     source_line: int | None = None
+    available_ts_us: int | None = None
+    ready_ts_us: int | None = None
 
     kind: EventKind = field(default=EventKind.BOOK_SNAPSHOT, init=False)
+
+    @property
+    def replay_ts_us(self) -> int:
+        return self.exchange_ts_us if self.ready_ts_us is None else self.ready_ts_us
 
 
 @dataclass(frozen=True, slots=True)
@@ -136,8 +149,14 @@ class BookDelta:
     depth: int | None = None
     provider: str = ""
     source_line: int | None = None
+    available_ts_us: int | None = None
+    ready_ts_us: int | None = None
 
     kind: EventKind = field(default=EventKind.BOOK_DELTA, init=False)
+
+    @property
+    def replay_ts_us(self) -> int:
+        return self.exchange_ts_us if self.ready_ts_us is None else self.ready_ts_us
 
 
 BookEvent = BookSnapshot | BookDelta

@@ -1,0 +1,126 @@
+{
+  "zip": "bybit-l2-feasibility-evidence.zip",
+  "platform": "win32",
+  "runs": [
+    {
+      "interpreter": "Python 3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+      "plain_pip_install_exit_code": 0,
+      "plain_pip_install_message": "",
+      "installed_with_ignore_requires_python": false,
+      "forced_install_exit_code": null,
+      "dependency_versions": [
+        "annotated-types==0.8.0",
+        "anyio==4.16.0",
+        "ast_serialize==0.13.1",
+        "certifi==2026.10.23",
+        "colorama==0.4.6",
+        "coverage==7.17.1",
+        "h11==0.16.0",
+        "httpcore==1.0.9",
+        "httpx==0.28.1",
+        "idna==3.20",
+        "iniconfig==2.3.1",
+        "librt==0.16.0",
+        "markdown-it-py==4.2.0",
+        "mdurl==0.1.2",
+        "mypy==2.4.1",
+        "mypy_extensions==1.2.0",
+        "packaging==26.3",
+        "pathspec==1.1.1",
+        "pluggy==1.7.0",
+        "pydantic==2.14.2",
+        "pydantic_core==2.50.2",
+        "Pygments==2.21.0",
+        "pytest==9.2.0",
+        "pytest-asyncio==1.4.1.post1",
+        "pytest-cov==7.1.0",
+        "PyYAML==6.0.3",
+        "rich==15.0.0",
+        "ruff==0.17.3",
+        "types-PyYAML==6.0.12.20261103",
+        "typing-inspection==0.4.4",
+        "typing_extensions==4.16.0"
+      ],
+      "without_raw_data": {
+        "command": "python -m pytest -q -rs",
+        "collected_tests_line": "147 tests collected in 13.32s",
+        "test_ids_collected": 147,
+        "summary_line": "147 passed, 1 skipped in 66.97s (0:01:06)",
+        "skip_reasons": [
+          "SKIPPED [1] tests\\integration\\test_real_sample.py:28: real sample not downloaded (run verify-data)"
+        ],
+        "real_data_tests_collected": 0,
+        "exit_code": 0
+      },
+      "with_raw_data": {
+        "command": "python -m pytest -q -rs",
+        "collected_tests_line": "151 tests collected in 0.99s",
+        "test_ids_collected": 151,
+        "summary_line": "151 passed in 80.43s (0:01:20)",
+        "skip_reasons": [],
+        "real_data_tests_collected": 4,
+        "exit_code": 0
+      }
+    },
+    {
+      "interpreter": "Python 3.13.18 (main, Oct 26 2026, 14:10:48) [MSC v.1944 64 bit (AMD64)]",
+      "plain_pip_install_exit_code": 1,
+      "plain_pip_install_message": "ERROR: Package 'bybit-l2-feasibility' requires a different Python: 3.13.18 not in '<3.13,>=3.12'",
+      "installed_with_ignore_requires_python": true,
+      "forced_install_exit_code": 0,
+      "dependency_versions": [
+        "annotated-types==0.8.0",
+        "anyio==4.16.0",
+        "ast_serialize==0.13.1",
+        "certifi==2026.10.23",
+        "colorama==0.4.6",
+        "coverage==7.17.1",
+        "h11==0.16.0",
+        "httpcore==1.0.9",
+        "httpx==0.28.1",
+        "idna==3.20",
+        "iniconfig==2.3.1",
+        "librt==0.16.0",
+        "markdown-it-py==4.2.0",
+        "mdurl==0.1.2",
+        "mypy==2.4.1",
+        "mypy_extensions==1.2.0",
+        "packaging==26.3",
+        "pathspec==1.1.1",
+        "pluggy==1.7.0",
+        "pydantic==2.14.2",
+        "pydantic_core==2.50.2",
+        "Pygments==2.21.0",
+        "pytest==9.2.0",
+        "pytest-asyncio==1.4.1.post1",
+        "pytest-cov==7.1.0",
+        "PyYAML==6.0.3",
+        "rich==15.0.0",
+        "ruff==0.17.3",
+        "types-PyYAML==6.0.12.20261103",
+        "typing-inspection==0.4.4",
+        "typing_extensions==4.16.0"
+      ],
+      "without_raw_data": {
+        "command": "python -m pytest -q -rs",
+        "collected_tests_line": "147 tests collected in 1.71s",
+        "test_ids_collected": 147,
+        "summary_line": "147 passed, 1 skipped in 14.54s",
+        "skip_reasons": [
+          "SKIPPED [1] tests\\integration\\test_real_sample.py:28: real sample not downloaded (run verify-data)"
+        ],
+        "real_data_tests_collected": 0,
+        "exit_code": 0
+      },
+      "with_raw_data": {
+        "command": "python -m pytest -q -rs",
+        "collected_tests_line": "151 tests collected in 0.59s",
+        "test_ids_collected": 151,
+        "summary_line": "151 passed in 97.87s (0:01:37)",
+        "skip_reasons": [],
+        "real_data_tests_collected": 4,
+        "exit_code": 0
+      }
+    }
+  ]
+}

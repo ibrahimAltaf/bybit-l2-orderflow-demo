@@ -1,0 +1,143 @@
+{
+  "datasets": [
+    {
+      "class_counts": {
+        "CONFIRMED_MISSING": 0,
+        "OBSERVED_NONUNIT_U_INCREMENT": 0,
+        "SUSPECTED_GAP": 0,
+        "UNKNOWN_UNVERIFIABLE": 0,
+        "VALID_RESET_OR_SNAPSHOT_BOUNDARY": 2
+      },
+      "clock": "ts",
+      "completeness_statement": "No claim of completeness. No contradicting evidence was found in what this source can show; losses inside quiet intervals are unobservable.",
+      "dataset_id": "bybit_ORDIUSDT_2026-10-01",
+      "duplicates_skipped": 0,
+      "findings_listed": [
+        {
+          "class": "VALID_RESET_OR_SNAPSHOT_BOUNDARY",
+          "detail": "snapshot",
+          "time": "2026-10-01T00:00:00.316000Z",
+          "update_id": 26783760
+        },
+        {
+          "class": "VALID_RESET_OR_SNAPSHOT_BOUNDARY",
+          "detail": "snapshot",
+          "time": "2026-10-02T00:00:00.316000Z",
+          "update_id": 27122914
+        }
+      ],
+      "findings_total": 2,
+      "has_update_ids": true,
+      "plus_one_increments": 339154,
+      "quiet_threshold_s": 30.0,
+      "records": 339156,
+      "symbol": "ORDIUSDT"
+    },
+    {
+      "class_counts": {
+        "CONFIRMED_MISSING": 0,
+        "OBSERVED_NONUNIT_U_INCREMENT": 0,
+        "SUSPECTED_GAP": 0,
+        "UNKNOWN_UNVERIFIABLE": 0,
+        "VALID_RESET_OR_SNAPSHOT_BOUNDARY": 2
+      },
+      "clock": "ts",
+      "completeness_statement": "No claim of completeness. No contradicting evidence was found in what this source can show; losses inside quiet intervals are unobservable.",
+      "dataset_id": "bybit_10000LADYSUSDT_2025-10-01",
+      "duplicates_skipped": 0,
+      "findings_listed": [
+        {
+          "class": "VALID_RESET_OR_SNAPSHOT_BOUNDARY",
+          "detail": "snapshot",
+          "time": "2025-10-01T00:00:00.435000Z",
+          "update_id": 4423756
+        },
+        {
+          "class": "VALID_RESET_OR_SNAPSHOT_BOUNDARY",
+          "detail": "snapshot",
+          "time": "2025-10-02T00:00:00.434000Z",
+          "update_id": 4977197
+        }
+      ],
+      "findings_total": 2,
+      "has_update_ids": true,
+      "plus_one_increments": 553441,
+      "quiet_threshold_s": 30.0,
+      "records": 553443,
+      "symbol": "10000LADYSUSDT"
+    },
+    {
+      "class_counts": {
+        "CONFIRMED_MISSING": 0,
+        "OBSERVED_NONUNIT_U_INCREMENT": 0,
+        "SUSPECTED_GAP": 0,
+        "UNKNOWN_UNVERIFIABLE": 0,
+        "VALID_RESET_OR_SNAPSHOT_BOUNDARY": 2
+      },
+      "clock": "ts",
+      "completeness_statement": "No claim of completeness. No contradicting evidence was found in what this source can show; losses inside quiet intervals are unobservable.",
+      "dataset_id": "bybit_10000LADYSUSDT_2025-06-01",
+      "duplicates_skipped": 0,
+      "findings_listed": [
+        {
+          "class": "VALID_RESET_OR_SNAPSHOT_BOUNDARY",
+          "detail": "snapshot",
+          "time": "2025-06-01T00:00:00.905000Z",
+          "update_id": 21028146
+        },
+        {
+          "class": "VALID_RESET_OR_SNAPSHOT_BOUNDARY",
+          "detail": "snapshot",
+          "time": "2025-06-02T00:00:00.902000Z",
+          "update_id": 21401003
+        }
+      ],
+      "findings_total": 2,
+      "has_update_ids": true,
+      "plus_one_increments": 372857,
+      "quiet_threshold_s": 30.0,
+      "records": 372859,
+      "symbol": "10000LADYSUSDT"
+    },
+    {
+      "class_counts": {
+        "CONFIRMED_MISSING": 0,
+        "OBSERVED_NONUNIT_U_INCREMENT": 0,
+        "SUSPECTED_GAP": 0,
+        "UNKNOWN_UNVERIFIABLE": 1,
+        "VALID_RESET_OR_SNAPSHOT_BOUNDARY": 2
+      },
+      "clock": "ts",
+      "completeness_statement": "No claim of completeness. No contradicting evidence was found in what this source can show; losses inside quiet intervals are unobservable.",
+      "dataset_id": "tardis_ORDIUSDT_2026-10-01",
+      "duplicates_skipped": 0,
+      "findings_listed": [
+        {
+          "class": "VALID_RESET_OR_SNAPSHOT_BOUNDARY",
+          "detail": "snapshot",
+          "time": "2026-09-30T23:59:59.815000Z",
+          "update_id": null
+        },
+        {
+          "class": "VALID_RESET_OR_SNAPSHOT_BOUNDARY",
+          "detail": "snapshot",
+          "time": "2026-10-01T09:27:02.315000Z",
+          "update_id": null
+        },
+        {
+          "class": "UNKNOWN_UNVERIFIABLE",
+          "detail": "source has no update IDs: sequence continuity cannot be tested at all",
+          "time": "2026-10-01T23:59:58.775000Z",
+          "update_id": null
+        }
+      ],
+      "findings_total": 3,
+      "has_update_ids": false,
+      "plus_one_increments": 0,
+      "quiet_threshold_s": 30.0,
+      "records": 651959,
+      "symbol": "ORDIUSDT"
+    }
+  ],
+  "generator": "scripts/verify_continuity.py"
+}

@@ -37,8 +37,8 @@ python -m pytest                                         # full test suite
 | Real-data correctness | — | `test_real_sample.py` (full-day checkpoint, real prefix determinism/causality) |
 | Adversarial invariants | — | `test_adversarial.py` (future perturbation ×5 scenarios, stream-order independence, no simultaneous LONG/SHORT confirm, locked book, empty side, resync, hand-calculated CVD, wrong date/depth, timestamp round-trip) |
 
-Test result: **151 passed** (`python -m pytest`, incl. 4 real-data and 29 adversarial tests), branch-aware coverage **92 %**.
-`ruff check` and `ruff format --check` clean; `mypy --strict` clean over src, tests and scripts (62 files).
+Test result: **192 passed** with raw data, 188 passed and 4 skipped without (`python -m pytest`, incl. 4 real-data and 29 adversarial tests), branch-aware coverage **92 %**.
+`ruff check` and `ruff format --check` clean; `mypy --strict` clean over src, tests and scripts (81 files).
 The least-covered module is `data/verification.py` (63 %). Its cross-provider path runs on
 the real multi-provider data in `verify-data`, not in unit tests.
 
@@ -157,6 +157,11 @@ of the stage being evaluated.
 
 ## 5. No-lookahead argument (tested, not formally proven)
 
+Scope: everything in this section is about the `cts` replay clock. It shows that no later
+record was used on that clock. `cts` itself precedes a book message's generation time, so
+this is not evidence that the data was available at those times; see
+`docs/CAUSAL_REPLAY_TECHNICAL_RESPONSE.md`.
+
 1. Parsers are generators; `heapq.merge` yields one event at a time. A test confirms that
    reading the first merged event pulls exactly one element from the source.
 2. Every rolling structure raises `ReplayOrderError` if time moves backwards and evicts
@@ -270,5 +275,5 @@ replay on publish time `ts` (config `replay.book_clock: ts`) gave:
 | CONFIRMED timestamp shift | — | −198 ms … +32 ms |
 | ISOLATED_SPIKE flags | 2,382 | 2,391 |
 
-Neither run models live latency, because trades remain on engine time in both. The
-sensitivity run's output is not part of the evidence set.
+Neither run models live latency, because trades remain on engine time in both. This table
+is superseded by the full scenario comparison in `docs/CAUSAL_REPLAY_TECHNICAL_RESPONSE.md`.

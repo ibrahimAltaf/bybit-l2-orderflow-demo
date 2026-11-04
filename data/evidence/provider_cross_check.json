@@ -141,10 +141,10 @@
     "only_in_bybit_ORDIUSDT_2026-10-01": 0,
     "only_in_tardis_ORDIUSDT_2026-10-01": 0,
     "tardis_ORDIUSDT_2026-10-01_rows": 21347,
-    "timestamp_abs_diff_ms": {
-      "max": 0,
-      "p50": 0,
-      "p99": 0
+    "timestamp_abs_diff_us": {
+      "max": 900,
+      "p50": 400,
+      "p99": 900
     }
   }
 }
