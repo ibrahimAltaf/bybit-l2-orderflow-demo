@@ -5,9 +5,9 @@
 Output: dist/client-evidence-package/ and dist/bybit-l2-feasibility-evidence.zip
 (plus dist/bybit-l2-feasibility-evidence.zip.sha256).
 
-* Source, tests, config, docs and scripts are taken from ``git ls-files`` (so no
-  venv, caches, IDE files or untracked scratch files can leak in); the working
-  tree must be clean.
+* Source, tests, config, docs and scripts are extracted from the commit with ``git
+  archive`` (so no venv, caches, IDE files or untracked files can leak in, and
+  every file equals the commit byte for byte); the working tree must be clean.
 * evidence/ is copied from data/evidence/; the complete audit logs go to
   evidence/complete/. evidence/evidence_hashes.sha256 lists every evidence file.
 * Raw market data is NOT included (redistribution terms not verified);
@@ -17,9 +17,11 @@ Output: dist/client-evidence-package/ and dist/bybit-l2-feasibility-evidence.zip
 from __future__ import annotations
 
 import hashlib
+import io
 import shutil
 import subprocess
 import sys
+import tarfile
 import zipfile
 from pathlib import Path
 
@@ -49,18 +51,20 @@ def main() -> int:
     commit = subprocess.run(
         ["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True, check=True
     ).stdout.strip()
-    tracked = subprocess.run(
-        ["git", "ls-files"], cwd=ROOT, capture_output=True, text=True, check=True
-    ).stdout.splitlines()
+    # Taken from the commit itself, not the working tree: on Windows the working copy can
+    # have CRLF line endings, and the package must equal the commit byte for byte.
+    archive = subprocess.run(
+        ["git", "archive", "--format=tar", "HEAD"], cwd=ROOT, capture_output=True, check=True
+    )
 
     shutil.rmtree(PKG, ignore_errors=True)
     PKG.mkdir(parents=True)
-    for rel in tracked:
-        if rel.startswith("data/evidence/") and rel != "data/evidence/download_manifest.json":
-            continue  # evidence goes to evidence/; the manifest stays for hash enforcement
-        dest = PKG / rel
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(ROOT / rel, dest)
+    with tarfile.open(fileobj=io.BytesIO(archive.stdout)) as tar:
+        for member in tar.getmembers():
+            rel = member.name
+            if rel.startswith("data/evidence/") and rel != "data/evidence/download_manifest.json":
+                continue  # evidence goes to evidence/; the manifest stays for hash enforcement
+            tar.extract(member, PKG, filter="data")
 
     ev = PKG / "evidence"
     (ev / "complete").mkdir(parents=True)

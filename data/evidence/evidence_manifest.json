@@ -133,12 +133,12 @@
     {
       "bytes": 561,
       "file": "verification_commands.txt",
-      "sha256": "a267750e91e9fcb94b30d2de2527d2922e32fe47e7fbfa7a276958cca8d11bc5"
+      "sha256": "4f4505e2514d5144e8251306a3f06b87634324993177890901a607a93d28a2a6"
     },
     {
-      "bytes": 10733,
+      "bytes": 10734,
       "file": "verification_results.json",
-      "sha256": "93fef4848cbc4a3b599172e5bb2e31dce9769e120e66dc6e1cbe882e9eef604f"
+      "sha256": "c800e931ffcff98f4b08e70d2b621c556630ac6afa27e8f982357fb444fb8520"
     }
   ]
 }

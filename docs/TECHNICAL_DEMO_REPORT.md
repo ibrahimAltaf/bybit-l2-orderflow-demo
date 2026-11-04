@@ -1,6 +1,7 @@
 # Technical Demonstration Report
 
 Real data: Bybit official archive, **ORDIUSDT USDT perpetual, 2026-10-01 (full UTC day)**.
+The results in this report are from the `cts` replay, a labelled **NON-CAUSAL BASELINE**.
 Synthetic fixtures are used *only* for state-machine unit behaviour and are labelled as such.
 **This feasibility demonstration does not claim historical profitability.**
 
@@ -157,10 +158,10 @@ of the stage being evaluated.
 
 ## 5. No-lookahead argument (tested, not formally proven)
 
-Scope: everything in this section is about the `cts` replay clock. It shows that no later
-record was used on that clock. `cts` itself precedes a book message's generation time, so
-this is not evidence that the data was available at those times; see
-`docs/CAUSAL_REPLAY_TECHNICAL_RESPONSE.md`.
+Scope: everything in this section is about the `cts` replay, which is a **NON-CAUSAL
+BASELINE**. It shows that no later record was used on that clock. `cts` itself precedes a
+book message's generation time, so this is not evidence that the data was available at
+those times; see `docs/CAUSAL_REPLAY_TECHNICAL_RESPONSE.md`.
 
 1. Parsers are generators; `heapq.merge` yields one event at a time. A test confirms that
    reading the first merged event pulls exactly one element from the source.

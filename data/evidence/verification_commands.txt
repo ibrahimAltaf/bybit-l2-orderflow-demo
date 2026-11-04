@@ -7,8 +7,8 @@ python scripts/verify_tardis_trades.py
 python scripts/verify_timestamp_reconciliation.py
 python scripts/verify_continuity.py
 python scripts/run_causal_replay.py --workers 5
-python scripts/verify_causal_replay.py --all
 python scripts/verify_no_lookahead.py
 python scripts/verify_no_lookahead.py --scenario best_supported
+python scripts/verify_causal_replay.py --all
 python scripts/verify_determinism.py
 python scripts/benchmark_replay.py

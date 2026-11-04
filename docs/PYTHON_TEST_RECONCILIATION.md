@@ -42,7 +42,7 @@ The delivered `pyproject.toml` had `requires-python = ">=3.12,<3.13"`, so a plai
 The real-data tests now skip per test, so they are always collected: a run without data
 reports each of them as skipped instead of hiding them.
 
-Current suite: `192 passed in 210.31s (0:03:30)`, branch coverage 92%.
+Current suite: `192 passed in 322.42s (0:05:22)`, branch coverage 92%.
 
 Lock file: `requirements-lock.txt`. Dependencies in the reconciliation run:
 `annotated-types==0.8.0`, `anyio==4.16.0`, `ast_serialize==0.13.1`, `certifi==2026.10.23`, `colorama==0.4.6`, `coverage==7.17.1`, `h11==0.16.0`, `httpcore==1.0.9`, `httpx==0.28.1`, `idna==3.20`, `iniconfig==2.3.1`, `librt==0.16.0`, `markdown-it-py==4.2.0`, `mdurl==0.1.2`, `mypy==2.4.1`, `mypy_extensions==1.2.0`, `packaging==26.3`, `pathspec==1.1.1`, `pluggy==1.7.0`, `pydantic==2.14.2`, `pydantic_core==2.50.2`, `Pygments==2.21.0`, `pytest==9.2.0`, `pytest-asyncio==1.4.1.post1`, `pytest-cov==7.1.0`, `PyYAML==6.0.3`, `rich==15.0.0`, `ruff==0.17.3`, `types-PyYAML==6.0.12.20261103`, `typing-inspection==0.4.4`, `typing_extensions==4.16.0`.
